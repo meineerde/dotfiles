@@ -16,7 +16,7 @@ __prompt_command() {
 	}
 
 	git_dir() {
-	   	ref=`__git_ps1`
+	   	ref=$(echo -e $(__git_ps1))
 		if [ -z $ref ]; then return 1; fi
 		vcs="git"
 		alias pull="git pull"
