@@ -5,7 +5,7 @@
    co = checkout
    merge = merge --no-ff
    pull = pull --no-ff
-   ci = checkin
+   ci = commit
 [user]
    name = Holger Just
    email = "web@meine-er.de"
