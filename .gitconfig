@@ -6,6 +6,7 @@
    merge = merge --no-ff
    pull = pull --no-ff
    ci = commit
+   cm = commit
 [user]
    name = Holger Just
    email = "web@meine-er.de"
