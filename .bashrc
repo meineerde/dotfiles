@@ -88,7 +88,7 @@ case `uname` in
     fi
     function fullscreen() { printf "\e[3;0;0;t\e[8;0;0t"; return 0; }
     alias ls='ls -G'
-    for p in /usr/local/*/bin /usr/*/bin; do
+    for p in /usr/local/*/bin /usr/*/bin /usr/local/Cellar/python/*/bin; do
       export PATH=$p:$PATH
     done
     unset p
@@ -153,8 +153,8 @@ ps1_ruby='$(rvm-prompt)'
 
 . $HOME/bin/bash_vcs.sh
 ps1_vcs='$(__prompt_command)'
-#ps1_ruby=' \[\033[33m\]$(rvm-prompt)\[\033[00m\]'
-ps1_ruby=""
+ps1_ruby=' \[\033[0;34m\]$(rvm-prompt v g)\[\033[00m\]'
+#ps1_ruby=""
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
@@ -171,8 +171,8 @@ short_pwd() {
     echo "$FIXED_PWD"
   fi
 }
-#ps1_pwd='$(short_pwd)'
-ps1_pwd='\[\033[1;30m\]\W\[\033[00m\]'
+ps1_pwd='\[\033[1;30m\]$(short_pwd)\[\033[00m\]'
+#ps1_pwd='\[\033[1;30m\]\W\[\033[00m\]'
 
 # Building $PS1.
 if [ -n "$ps1_user" ] && [ -n "$ps1_host" ]; then ps1_user="$ps1_user@"; fi
