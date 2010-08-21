@@ -22,5 +22,4 @@
    default = matching
 [core]
    autocrlf = false
-	editor = mate -wl1
-
+   editor = mate -wl1
