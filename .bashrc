@@ -212,6 +212,8 @@ alias gdiff='git diff'
 alias st='git st'
 alias log='git lg'
 alias ciam='git ci -am'
+alias got='git'
+alias goit='git'
 
 alias ss="script/server -b 127.0.0.1"
 alias sc="script/console"
