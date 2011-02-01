@@ -67,7 +67,7 @@ fi
 USER_NAME="Holger Just"
 USER_EMAIL="web@meine-er.de"
 # Setting up git.
-if [ -f ~/.gitconfig ]; then
+if [[ -f ~/.gitconfig ]]; then
   if [ "$(git config --global user.name)" != "$USER_NAME" ]; then
     echo "WARNING: git's user.name is $(git config --global user.name)"
   fi
