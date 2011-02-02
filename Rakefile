@@ -9,7 +9,7 @@ namespace :install do
         full = File.join Dir.pwd, file
         Dir.chdir ENV["HOME"] do
           mkdir_p File.dirname(file) 
-	  sh "rm #{file}" if (File.exist? file and File.directory? full)
+          File.delete(file) if (File.exist? file and File.directory? full)
           sh "ln -sf #{full} #{file}"
         end
       end
@@ -18,7 +18,7 @@ namespace :install do
   end
 
   install :irb, ".irbrc", ".config/irb/*.rb"
-  install :dot, ".bash_profile", ".bashrc", ".gemrc", ".vimrc", ".vim", ".gitignore", ".gitconfig"
+  install :dot, ".bash_profile", ".bashrc", ".gemrc", ".vimrc", ".vim", ".gitignore", ".global_gitconfig"
   install :bin, "bin/*"
 
   desc "installs the custom texmf folder"
