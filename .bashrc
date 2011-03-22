@@ -88,23 +88,40 @@ case `uname` in
     fi
     function fullscreen() { printf "\e[3;0;0;t\e[8;0;0t"; return 0; }
     alias ls='ls -G'
-    for p in /usr/local/*/bin /usr/*/bin /usr/local/Cellar/python/*/bin; do
-      export PATH=$p:$PATH
+
+    python="$(which python)"
+    python_path=""
+    # Find correct python bin path with multiple Pythons installed by Homebrew
+    if [[ $(echo "$python" | grep '^/usr/local/bin') ]]; then
+      # Python comes from Homebrew
+      target=$(readlink "$python")
+      if [[ $? ]]; then
+        # the python binary is a symlink
+        python_path=$(cd "$(dirname "$python")" && cd "$(dirname "$target")" && pwd)
+      fi
+    fi
+
+    for p in "$python_path" /usr/local/*/bin /usr/*/bin; do
+      if [[ -n "$p" ]]; then
+        export PATH=$p:$PATH
+      fi
     done
-    unset p
+
+    unset p python python_path
+
     gitx() { open -a GitX $@; }
     pdfman() { man -t $1 | open -a /Applications/Preview.app -f; }
-    
+
     # Bash completion
     if [ -f `brew --prefix`/etc/bash_completion ]; then
       . `brew --prefix`/etc/bash_completion
     fi
-    
+
     ;;
   Linux)
     PATH=$PATH:/var/lib/gems/1.8/bin:/var/lib/gems/1.9/bin
     alias ls='ls --color=auto'
-    
+
     # enable bash completion in interactive shells
     if [ -f /etc/bash_completion ]; then
         . /etc/bash_completion
@@ -113,11 +130,11 @@ case `uname` in
   SunOS)
     stty istrip
     export PATH=/opt/csw/bin:/opt/sfw/bin:$PATH:/etc
-    
+
     if [ -f /etc/bash_completion ]; then
         . /etc/bash_completion
     fi
-    
+
     # home key
     bind '"\e[1~":beginning-of-line'
     # del key
