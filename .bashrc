@@ -16,7 +16,7 @@ function delink()
 
 # General Settings
 export DOTFILES=$(dirname `delink ~/.bashrc` )
-export PATH="/usr/local/sbin:/usr/local/bin:/Developer/usr/bin:/usr/sbin:/usr/bin:$PATH:/opt/bin:/opt/local/bin:."
+export PATH="/usr/local/sbin:/usr/local/bin:/opt/local/bin:/Developer/usr/bin:/usr/sbin:/usr/bin:$PATH:/opt/bin:/opt/local/bin:."
 export PATH="$HOME/bin:$DOTFILES/bin:$PATH"
 export PWD_LENGTH=50
 set -o notify
@@ -251,7 +251,7 @@ cat() {
 
 # directory for project
 d() {
-  for dir in $HOME/workspace/$1 $HOME/$1 $1 $RUBY_PATH/$RUBY_VERSION/lib/ruby/gems/*/gems/$1-*; do
+  for dir in $HOME/workspace/$1 $HOME/$1 $1 /Volumes/Finn/$1 $RUBY_PATH/$RUBY_VERSION/lib/ruby/gems/*/gems/$1-*; do
     if [ -d $dir ]; then
       echo $dir
       break
