@@ -1,25 +1,25 @@
 [alias]
-  lg = log --graph --pretty=format:'%Cred%h%Creset %Cblue(%aN)%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
-  chp = cherry-pick
-  st = status
-  co = checkout
-  merge = merge --no-ff
-  pull = pull --no-ff
-  ci = commit
-  cm = commit
+	lg = log --graph --pretty=format:'%Cred%h%Creset %Cblue(%aN)%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+	chp = cherry-pick
+	st = status
+	co = checkout
+	merge = merge --no-ff
+	pull = pull --no-ff
+	ci = commit
+	cm = commit
 [user]
-  name = Holger Just
-  email = "web@meine-er.de"
+	name = Holger Just
+	email = "hjust@meine-er.de"
 [color]
-  branch = auto
-  diff = auto
-  grep = auto
-  interactive = auto
-  ui = auto
+	branch = auto
+	diff = auto
+	grep = auto
+	interactive = auto
+	ui = auto
 [help]
-  autocorrect = 1
+	autocorrect = 1
 [push]
-  default = matching
+	default = matching
 [core]
-  autocrlf = false
-  editor = mate -wl1
+	autocrlf = false
+	editor = mate -wl1
