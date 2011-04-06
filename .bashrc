@@ -235,7 +235,7 @@ alias goit='git'
 alias ss="script/server -b 127.0.0.1"
 alias sc="script/console"
 
-alias ssh="ssh -A"
+alias redcar="wrapped_redcar --fork"
 
 # shorthands - i do this a lot
 ruby_version() { if [ -z $1 ]; then echo $RUBY_VERSION; else RUBY_VERSION=$1; fi; }
