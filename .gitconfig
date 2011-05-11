@@ -23,3 +23,5 @@
 [core]
 	autocrlf = false
 	editor = mate -wl1
+[github]
+	user = meineerde
