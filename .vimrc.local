@@ -1,0 +1,4 @@
+" Color schema
+color molokai
+
+let NERDTreeShowHidden = 1

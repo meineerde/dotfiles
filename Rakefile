@@ -18,7 +18,7 @@ namespace :install do
   end
 
   install :irb, ".irbrc", ".config/irb/*.rb"
-  install :dot, *%w(.bash_profile .bashrc .gemrc .global_gitignore .gitconfig .ackrc .vimrc.local)
+  install :dot, *%w(.bash_profile .bashrc .gemrc .global_gitignore .gitconfig .ackrc)
   install :bin, "bin/*"
 
   desc "Update all submodules"
@@ -34,13 +34,11 @@ namespace :install do
 
   desc "Update the janus bundle"
   task :vim => :submodules do
-    dir = ".vim"
-    tasks = Rake::Task.tasks
+    install :vim, *%w(.vim .vimrc.local .janus.rake)
 
-    Dir.chdir File.join(File.dirname(__FILE__), dir) do
+    Dir.chdir File.join(File.dirname(__FILE__), ".vim") do
       system "rake"
     end
-    install :vim, dir
   end
 
   task :all => [:texmf, :vim]
