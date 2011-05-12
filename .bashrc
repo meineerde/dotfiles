@@ -36,11 +36,8 @@ export HISTCONTROL=ignoreboth
 shopt -s histappend >/dev/null 2>&1
 
 
+# Load RVM
 [[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm
-
-
-export PG_DATA=/usr/local/var/postgres
-
 
 # Ruby Settings
 export RUBY_VERSION=1.8.7
@@ -67,7 +64,7 @@ fi
 USER_NAME="Holger Just"
 USER_EMAIL="web@meine-er.de"
 # Setting up git.
-if [[ -f ~/.gitconfig ]]; then
+if [[ -n $NOPROMPT ]] && [[ -f ~/.gitconfig ]]; then
   if [ "$(git config --global user.name)" != "$USER_NAME" ]; then
     echo "WARNING: git's user.name is $(git config --global user.name)"
   fi
@@ -82,9 +79,9 @@ fi
 case `uname` in
   Darwin)
     export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home"
-    if [ $(which mate) ]; then
-      export EDITOR="mate"
-      export SVN_EDITOR="mate -wl1"
+    if [ $(which mvim) ]; then
+      export EDITOR="mvim"
+      export SVN_EDITOR="mvim -f +1"
     fi
     function fullscreen() { printf "\e[3;0;0;t\e[8;0;0t"; return 0; }
     alias ls='ls -G'
@@ -109,8 +106,10 @@ case `uname` in
 
     unset p python python_path
 
+    export PG_DATA=/usr/local/var/postgres
+
     gitx() { open -a GitX $@; }
-    pdfman() { man -t $1 | open -a /Applications/Preview.app -f; }
+    pdfman() { man -t $1 | open -a /Applications/Skim.app -f; }
 
     # Bash completion
     if [ -f `brew --prefix`/etc/bash_completion ]; then
