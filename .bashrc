@@ -52,9 +52,6 @@ if [[ !`which install_ruby 2>/dev/null` ]] && [[ `which ruby 2>/dev/null` ]]; th
   export RUBY_VERSION=$(ruby --version | sed -e "s/^ruby \(.\..\..\).*$/\1/")
 fi
 
-# Disable XON/XOFF flow control (^s/^q).
-stty -ixon
-
 # SSH specific config.
 if [ -n "$SSH_CLIENT" ]; then
   # show host only if this is an ssh session
@@ -63,13 +60,20 @@ fi
 
 USER_NAME="Holger Just"
 USER_EMAIL="web@meine-er.de"
-# Setting up git.
-if [[ -n $NOPROMPT ]] && [[ -f ~/.gitconfig ]]; then
-  if [ "$(git config --global user.name)" != "$USER_NAME" ]; then
-    echo "WARNING: git's user.name is $(git config --global user.name)"
-  fi
-  if [ "$(git config --global user.email)" != "$USER_EMAIL" ]; then
-    echo "WARNING: git's user.email is $(git config --global user.email)"
+
+# Only if we are in an interactive session
+if [[ $- =~ 'i' ]]; then
+  # Disable XON/XOFF flow control (^s/^q).
+  stty -ixon
+
+  # Setting up git.
+  if [[ -f ~/.gitconfig ]]; then
+    if [ "$(git config --global user.name)" != "$USER_NAME" ]; then
+      echo "WARNING: git's user.name is $(git config --global user.name)"
+    fi
+    if [ "$(git config --global user.email)" != "$USER_EMAIL" ]; then
+      echo "WARNING: git's user.email is $(git config --global user.email)"
+    fi
   fi
 fi
 
