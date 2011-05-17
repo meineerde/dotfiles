@@ -2,7 +2,7 @@
 # Tim Felgentreff (09/20/01): Simplify for speedup, use the git-completion script for git
 
 __prompt_command() {
-  if [ -z $NOPROMPT ]; then
+  if [[ -z $NOPROMPT ]]; then
     local vcs base_dir sub_dir ref last_command _bold _normal
 
     _bold=$(tput bold)
