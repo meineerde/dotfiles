@@ -22,6 +22,6 @@
 	default = matching
 [core]
 	autocrlf = false
-	editor = mvim -f +1
+	editor = mate -wl1
 [github]
 	user = meineerde

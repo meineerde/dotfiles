@@ -52,13 +52,16 @@ if [[ !`which install_ruby 2>/dev/null` ]] && [[ `which ruby 2>/dev/null` ]]; th
   export RUBY_VERSION=$(ruby --version | sed -e "s/^ruby \(.\..\..\).*$/\1/")
 fi
 
+# NVM
+[[ -s $HOME/.nvm/nvm.sh ]] && source $HOME/.nvm/nvm.sh
+
 # Disable XON/XOFF flow control (^s/^q).
 stty -ixon
 
 # SSH specific config.
 if [ -n "$SSH_CLIENT" ]; then
   # show host only if this is an ssh session
-  ps1_host="\[\033[01;32m\]\h"
+  ps1_host="\[\e[01;32m\]\h"
 fi
 
 USER_NAME="Holger Just"
@@ -80,8 +83,8 @@ case `uname` in
   Darwin)
     export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home"
     if [ $(which mvim) ]; then
-      export EDITOR="mvim"
-      export SVN_EDITOR="mvim -f +1"
+      export EDITOR="mate"
+      export SVN_EDITOR="mate -wl1"
     fi
     function fullscreen() { printf "\e[3;0;0;t\e[8;0;0t"; return 0; }
     alias ls='ls -G'
@@ -148,7 +151,7 @@ case `uname` in
   *) echo "OS unknown to bashrc." ;;
 esac
 
-# setting up editor
+# setting up editor if not yet done
 [[ -z "$EDITOR" ]] && EDITOR="nano"
 [[ -z "$SVN_EDITOR" ]] && SVN_EDITOR="$EDITOR"
 git config --global --replace-all core.editor "$SVN_EDITOR"
@@ -159,8 +162,8 @@ case $USER in
   hjust) ;;
   *)
     case $UID in
-      0) ps1_user="\[\033[01;31m\]\u" ;;
-      *) ps1_user="\[\033[01;32m\]\u" ;;
+      0) ps1_user="\[\e[01;31m\]\u" ;;
+      *) ps1_user="\[\e[01;32m\]\u" ;;
     esac
 esac
 
@@ -169,7 +172,7 @@ ps1_ruby='$(rvm-prompt)'
 
 . $HOME/bin/bash_vcs.sh
 ps1_vcs='$(__prompt_command)'
-ps1_ruby=' \[\033[0;34m\]$(rvm-prompt v g)\[\033[00m\]'
+ps1_ruby=' \[\e[0;34m\]$(rvm-prompt v g)\[\e[00m\]'
 #ps1_ruby=""
 
 # set variable identifying the chroot you work in (used in the prompt below)
@@ -187,13 +190,13 @@ short_pwd() {
     echo "$FIXED_PWD"
   fi
 }
-ps1_pwd='\[\033[1;30m\]$(short_pwd)\[\033[00m\]'
-#ps1_pwd='\[\033[1;30m\]\W\[\033[00m\]'
+ps1_pwd='\[\e[1;30m\]$(short_pwd)\[\e[00m\]'
+#ps1_pwd='\[\e[1;30m\]\W\[\e[00m\]'
 
 # Building $PS1.
 if [ -n "$ps1_user" ] && [ -n "$ps1_host" ]; then ps1_user="$ps1_user@"; fi
 PS1="$ps1_user$ps1_host"
-if [ "$PS1" != "" ]; then PS1="$PS1\[\033[00m\]:"; fi
+if [ "$PS1" != "" ]; then PS1="$PS1\[\e[00m\]:"; fi
 export PS1="$PS1$ps1_pwd$ps1_vcs$ps1_ruby \$ "
 
 
@@ -202,7 +205,7 @@ export PS1="$PS1$ps1_pwd$ps1_vcs$ps1_ruby \$ "
 
 # If this is an xterm set the title to user@host:dir.
 case "$TERM" in
-  xterm*|rxvt*) export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"' ;;
+  xterm*|rxvt*) export PROMPT_COMMAND='echo -ne "\e]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"' ;;
   *) ;;
 esac
 
