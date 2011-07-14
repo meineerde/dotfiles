@@ -82,7 +82,7 @@ fi
 case `uname` in
   Darwin)
     export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home"
-    if [ $(which mvim) ]; then
+    if [ $(which mate) ]; then
       export EDITOR="mate"
       export SVN_EDITOR="mate -wl1"
     fi
@@ -112,6 +112,7 @@ case `uname` in
     export PG_DATA=/usr/local/var/postgres
 
     gitx() { open -a GitX $@; }
+    alias gx=gitx
     pdfman() { man -t $1 | open -a /Applications/Skim.app -f; }
 
     # Bash completion
@@ -226,6 +227,7 @@ alias screen='screen -U'
 alias use='rvm use'
 alias gems='gem list | less'
 alias less='less -R'
+
 alias gsvn='git svn'
 alias gdiff='git diff'
 alias st='git st'
