@@ -1,10 +1,10 @@
-if [ -f /etc/bashrc ]; then . /etc/bashrc; fi
+if [[ -f /etc/bashrc ]]; then . /etc/bashrc; fi
 
 # Function to resolve soft links
 function delink()
 {
   f=$1
-  while [ -h "$f" ]; do
+  while [[ -h "$f" ]]; do
     ls=`ls -ld "$f"`
     link=`expr "$ls" : '.*-> \(.*\)$'`
     if expr "$link" : '/.*' > /dev/null; then f="$link"
@@ -56,7 +56,7 @@ fi
 [[ -s $HOME/.nvm/nvm.sh ]] && source $HOME/.nvm/nvm.sh
 
 # SSH specific config.
-if [ -n "$SSH_CLIENT" ]; then
+if [[ -n "$SSH_CLIENT" ]]; then
   # show host only if this is an ssh session
   ps1_host="\[\e[01;32m\]\h"
 fi
@@ -86,7 +86,7 @@ fi
 case `uname` in
   Darwin)
     export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home"
-    if [ $(which mate) ]; then
+    if [[ $(which mate) ]]; then
       export EDITOR="mate"
       export SVN_EDITOR="mate -wl1"
     fi
@@ -199,14 +199,14 @@ ps1_pwd='\[\e[1;30m\]$(short_pwd)\[\e[00m\]'
 #ps1_pwd='\[\e[1;30m\]\W\[\e[00m\]'
 
 # Building $PS1.
-if [ -n "$ps1_user" ] && [ -n "$ps1_host" ]; then ps1_user="$ps1_user@"; fi
+if [[ -n "$ps1_user" ]] && [ -n "$ps1_host" ]; then ps1_user="$ps1_user@"; fi
 PS1="$ps1_user$ps1_host"
-if [ "$PS1" != "" ]; then PS1="$PS1\[\e[00m\]:"; fi
+if [[ "$PS1" != "" ]]; then PS1="$PS1\[\e[00m\]:"; fi
 export PS1="$PS1$ps1_pwd$ps1_vcs$ps1_ruby \$ "
 
 
 # Make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
+[[ -x /usr/bin/lesspipe ]] && eval "$(lesspipe)"
 
 # If this is an xterm set the title to user@host:dir.
 case "$TERM" in
@@ -215,7 +215,7 @@ case "$TERM" in
 esac
 
 # Enable color support. Don't add ls here, it behaves different on Darwin/BSD.
-if [ -x /usr/bin/dircolors ]; then eval "`dircolors -b`"; fi
+if [[ -x /usr/bin/dircolors ]]; then eval "`dircolors -b`"; fi
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
@@ -246,11 +246,11 @@ alias sc="script/console"
 alias redcar="wrapped_redcar --fork"
 
 # shorthands - i do this a lot
-ruby_version() { if [ -z $1 ]; then echo $RUBY_VERSION; else RUBY_VERSION=$1; fi; }
+ruby_version() { if [[ -z $1 ]]; then echo $RUBY_VERSION; else RUBY_VERSION=$1; fi; }
 
 # if cat is called on a directory, call ls instead
 cat() {
-  if [ $# = 1 ] && [ -d $1 ]; then
+  if [[ $# = 1 ]] && [[ -d $1 ]]; then
     ls $1
   else
     `which cat` "$@"
@@ -260,7 +260,7 @@ cat() {
 # directory for project
 d() {
   for dir in $HOME/workspace/$1 $HOME/$1 $1 /Volumes/Finn/$1 $RUBY_PATH/$RUBY_VERSION/lib/ruby/gems/*/gems/$1-*; do
-    if [ -d $dir ]; then
+    if [[ -d $dir ]]; then
       echo $dir
       break
     fi
@@ -271,7 +271,7 @@ d() {
 # do stuff with project
 with_project() {
   target=$(d $1)
-  if [ $target ]; then
+  if [[ $target ]]; then
     echo $2 $target
     $2 $target
   else
@@ -287,8 +287,8 @@ c() { with_project $1 cd; }
 e() { with_project $1 $EDITOR; }
 
 # Enable programmable completion features.
-if [ -f /etc/bash_completion ]; then . /etc/bash_completion; fi
-if [ -f ~/.tabtab.bash ]; then . ~/.tabtab.bash; fi
+if [[ -f /etc/bash_completion ]]; then . /etc/bash_completion; fi
+if [[ -f ~/.tabtab.bash ]]; then . ~/.tabtab.bash; fi
 set show-all-if-ambiguous on
 
 # Clean up.
