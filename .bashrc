@@ -47,11 +47,6 @@ if [[ -s $HOME/.rvm/scripts/rvm ]] ; then
   source $HOME/.rvm/scripts/rvm ;
 fi
 
-# Fix Ruby version
-if [[ !`which install_ruby 2>/dev/null` ]] && [[ `which ruby 2>/dev/null` ]]; then
-  export RUBY_VERSION=$(ruby --version | sed -e "s/^ruby \(.\..\..\).*$/\1/")
-fi
-
 # NVM
 [[ -s $HOME/.nvm/nvm.sh ]] && source $HOME/.nvm/nvm.sh
 
@@ -244,9 +239,6 @@ alias ss="script/server -b 127.0.0.1"
 alias sc="script/console"
 
 alias redcar="wrapped_redcar --fork"
-
-# shorthands - i do this a lot
-ruby_version() { if [[ -z $1 ]]; then echo $RUBY_VERSION; else RUBY_VERSION=$1; fi; }
 
 # if cat is called on a directory, call ls instead
 cat() {
