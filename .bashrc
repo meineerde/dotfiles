@@ -35,14 +35,7 @@ export HISTIGNORE="&:ls:ll:la:l.:pwd:exit:clear"
 export HISTCONTROL=ignoreboth
 shopt -s histappend >/dev/null 2>&1
 
-
 # Load RVM
-[[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm
-
-# Ruby Settings
-export RUBY_VERSION=1.8.7
-export RUBYOPT=-rubygems
-
 if [[ -s $HOME/.rvm/scripts/rvm ]] ; then
   source $HOME/.rvm/scripts/rvm ;
 fi
