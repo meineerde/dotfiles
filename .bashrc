@@ -198,7 +198,7 @@ export PS1="$PS1$ps1_pwd$ps1_vcs$ps1_ruby \$ "
 
 # If this is an xterm set the title to user@host:dir.
 case "$TERM" in
-  xterm*|rxvt*) export PROMPT_COMMAND='echo -ne "\e]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"' ;;
+  xterm*|rxvt*) export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"' ;;
   *) ;;
 esac
 
