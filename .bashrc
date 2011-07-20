@@ -161,12 +161,10 @@ case $USER in
 esac
 
 ps1_host='\h'
-ps1_ruby='$(rvm-prompt)'
 
 . $HOME/bin/bash_vcs.sh
 ps1_vcs='$(__prompt_command)'
-ps1_ruby=' \[\e[0;34m\]$(rvm-prompt v g)\[\e[00m\]'
-#ps1_ruby=""
+ps1_ruby=' \[\e[0;34m\]$(rvm-prompt u " " g)\[\e[00m\]'
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
