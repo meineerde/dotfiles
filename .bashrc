@@ -59,12 +59,16 @@ if [[ $- =~ 'i' ]]; then
 
   # Setting up git.
   if [[ -f ~/.gitconfig ]]; then
-    if [ "$(git config --global user.name)" != "$USER_NAME" ]; then
-      echo "WARNING: git's user.name is $(git config --global user.name)"
+    user_name="$(git config --global user.name)"
+    user_email="$(git config --global user.email)"
+
+    if [ "$user_name" != "$USER_NAME" ]; then
+      echo "WARNING: git's user.name is $user_name"
     fi
-    if [ "$(git config --global user.email)" != "$USER_EMAIL" ]; then
-      echo "WARNING: git's user.email is $(git config --global user.email)"
+    if [ "$user_email" != "$USER_EMAIL" ]; then
+      echo "WARNING: git's user.email is $user_email"
     fi
+    unset user_name user_email
   fi
 fi
 
@@ -84,7 +88,7 @@ case `uname` in
     python="$(which python)"
     python_path=""
     # Find correct python bin path with multiple Pythons installed by Homebrew
-    if [[ $(echo "$python" | grep '^/usr/local/bin') ]]; then
+    if [[ "$python" =~ ^/usr/local/bin ]]; then
       # Python comes from Homebrew
       target=$(readlink "$python")
       if [[ $? ]]; then
@@ -108,8 +112,8 @@ case `uname` in
     pdfman() { man -t $1 | open -a /Applications/Skim.app -f; }
 
     # Bash completion
-    if [ -f `brew --prefix`/etc/bash_completion ]; then
-      . `brew --prefix`/etc/bash_completion
+    if [[ -f "$(brew --prefix)/etc/bash_completion" ]]; then
+      . "$(brew --prefix)/etc/bash_completion"
     fi
 
     ;;
@@ -118,7 +122,7 @@ case `uname` in
     alias ls='ls --color=auto'
 
     # enable bash completion in interactive shells
-    if [ -f /etc/bash_completion ]; then
+    if [[ -f /etc/bash_completion |]; then
         . /etc/bash_completion
     fi
     ;;
@@ -174,8 +178,8 @@ PS1="${debian_chroot:+($debian_chroot)}"
 
 # Short PWD, if it's to long.
 short_pwd() {
-  FIXED_PWD=$(echo $PWD | sed "s:^$HOME:~:g")
-  if [ ${#FIXED_PWD} -gt $(($PWD_LENGTH)) ]; then
+  FIXED_PWD="${PWD/#$HOME/~}"
+  if [[ ${#FIXED_PWD} -gt $($PWD_LENGTH) ]]; then
     echo "${FIXED_PWD:0:$((4))}...${FIXED_PWD:$((${#PWD}-$PWD_LENGTH+7)):$(($PWD_LENGTH-7))}"
   else
     echo "$FIXED_PWD"
@@ -185,7 +189,7 @@ ps1_pwd='\[\e[1;30m\]$(short_pwd)\[\e[00m\]'
 #ps1_pwd='\[\e[1;30m\]\W\[\e[00m\]'
 
 # Building $PS1.
-if [[ -n "$ps1_user" ]] && [ -n "$ps1_host" ]; then ps1_user="$ps1_user@"; fi
+if [[ -n "$ps1_user" ]] && [[ -n "$ps1_host" ]]; then ps1_user="$ps1_user@"; fi
 PS1="$ps1_user$ps1_host"
 if [[ "$PS1" != "" ]]; then PS1="$PS1\[\e[00m\]:"; fi
 export PS1="$PS1$ps1_pwd$ps1_vcs$ps1_ruby \$ "
@@ -201,7 +205,7 @@ case "$TERM" in
 esac
 
 # Enable color support. Don't add ls here, it behaves different on Darwin/BSD.
-if [[ -x /usr/bin/dircolors ]]; then eval "`dircolors -b`"; fi
+if [[ -x /usr/bin/dircolors ]]; then eval "$(dircolors -b)"; fi
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
@@ -229,6 +233,9 @@ alias goit='git'
 alias ss="script/server -b 127.0.0.1"
 alias sc="script/console"
 
+alias rs="rails server -b 127.0.0.1"
+alias rc="rails console"
+
 alias redcar="wrapped_redcar --fork"
 
 # if cat is called on a directory, call ls instead
@@ -236,7 +243,7 @@ cat() {
   if [[ $# = 1 ]] && [[ -d $1 ]]; then
     ls $1
   else
-    `which cat` "$@"
+    /usr/bin/env cat "$@"
   fi
 }
 
