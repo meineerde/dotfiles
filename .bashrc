@@ -62,10 +62,10 @@ if [[ $- =~ 'i' ]]; then
     user_name="$(git config --global user.name)"
     user_email="$(git config --global user.email)"
 
-    if [ "$user_name" != "$USER_NAME" ]; then
+    if [[ "$user_name" != "$USER_NAME" ]]; then
       echo "WARNING: git's user.name is $user_name"
     fi
-    if [ "$user_email" != "$USER_EMAIL" ]; then
+    if [[ "$user_email" != "$USER_EMAIL" ]]; then
       echo "WARNING: git's user.email is $user_email"
     fi
     unset user_name user_email
@@ -122,7 +122,7 @@ case `uname` in
     alias ls='ls --color=auto'
 
     # enable bash completion in interactive shells
-    if [[ -f /etc/bash_completion |]; then
+    if [[ -f /etc/bash_completion ]]; then
         . /etc/bash_completion
     fi
     ;;
@@ -130,7 +130,7 @@ case `uname` in
     stty istrip
     export PATH=/opt/csw/bin:/opt/sfw/bin:$PATH:/etc
 
-    if [ -f /etc/bash_completion ]; then
+    if [[ -f /etc/bash_completion ]]; then
         . /etc/bash_completion
     fi
 
@@ -179,7 +179,7 @@ PS1="${debian_chroot:+($debian_chroot)}"
 # Short PWD, if it's to long.
 short_pwd() {
   FIXED_PWD="${PWD/#$HOME/~}"
-  if [[ ${#FIXED_PWD} -gt $($PWD_LENGTH) ]]; then
+  if [[ ${#FIXED_PWD} -gt ${#PWD_LENGTH} ]]; then
     echo "${FIXED_PWD:0:$((4))}...${FIXED_PWD:$((${#PWD}-$PWD_LENGTH+7)):$(($PWD_LENGTH-7))}"
   else
     echo "$FIXED_PWD"
