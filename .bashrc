@@ -179,7 +179,7 @@ PS1="${debian_chroot:+($debian_chroot)}"
 # Short PWD, if it's to long.
 short_pwd() {
   FIXED_PWD="${PWD/#$HOME/~}"
-  if [[ ${#FIXED_PWD} -gt ${#PWD_LENGTH} ]]; then
+  if [[ ${#FIXED_PWD} -gt $PWD_LENGTH ]]; then
     echo "${FIXED_PWD:0:$((4))}...${FIXED_PWD:$((${#PWD}-$PWD_LENGTH+7)):$(($PWD_LENGTH-7))}"
   else
     echo "$FIXED_PWD"
