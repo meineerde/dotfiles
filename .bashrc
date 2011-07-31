@@ -78,11 +78,17 @@ fi
 case `uname` in
   Darwin)
     export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home"
-    if [[ $(which mate) ]]; then
+
+    # this requires a symlink from "/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl"
+    # into $PATH, e.g. ~/bin/subl
+    if [[ $(which subl) ]]; then
+      export EDITOR="subl -n"
+      export SVN_EDITOR="subl -nw"
+    elif [[ $(which mate) ]]; then
       export EDITOR="mate"
       export SVN_EDITOR="mate -wl1"
     fi
-    function fullscreen() { printf "\e[3;0;0;t\e[8;0;0t"; return 0; }
+
     alias ls='ls -G'
 
     python="$(which python)"
@@ -96,13 +102,11 @@ case `uname` in
         python_path=$(cd "$(dirname "$python")" && cd "$(dirname "$target")" && pwd)
       fi
     fi
-
     for p in "$python_path" /usr/local/*/bin /usr/*/bin; do
       if [[ -n "$p" ]]; then
         export PATH=$p:$PATH
       fi
     done
-
     unset p python python_path
 
     export PG_DATA=/usr/local/var/postgres
@@ -236,8 +240,6 @@ alias sc="script/console"
 alias rs="rails server -b 127.0.0.1"
 alias rc="rails console"
 
-alias redcar="wrapped_redcar --fork"
-
 # if cat is called on a directory, call ls instead
 cat() {
   if [[ $# = 1 ]] && [[ -d $1 ]]; then
@@ -271,10 +273,10 @@ with_project() {
 }
 
 # cd to project
-c() { with_project $1 cd; }
+c() { with_project "$1" cd; }
 
 # open project in editor
-e() { with_project $1 $EDITOR; }
+e() { with_project "$1" "$EDITOR"; }
 
 # Enable programmable completion features.
 if [[ -f /etc/bash_completion ]]; then . /etc/bash_completion; fi
