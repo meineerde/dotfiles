@@ -237,11 +237,12 @@ alias ciam='git ci -am'
 alias got='git'
 alias goit='git'
 
-alias ss="script/server -b 127.0.0.1"
-alias sc="script/console"
-
 alias rs="rails server -b 127.0.0.1"
 alias rc="rails console"
+
+alias ss="if [[ -x script/server ]]; then script/server -b 127.0.0.1; else rs; fi"
+alias sc="if [[ -x script/console ]]; then script/console; else rc; fi"
+
 
 alias redcar="wrapped_redcar --fork"
 
