@@ -16,8 +16,6 @@
 	grep = auto
 	interactive = auto
 	ui = auto
-[help]
-	autocorrect = 1
 [push]
 	default = matching
 [core]
@@ -25,3 +23,5 @@
 	editor = mate -wl1
 [github]
 	user = meineerde
+[branch]
+	autosetupmerge = true
