@@ -257,25 +257,24 @@ cat() {
 
 # directory for project
 d() {
-  for dir in $HOME/workspace/$1 $HOME/$1 $1 /Volumes/Finn/$1 $RUBY_PATH/$RUBY_VERSION/lib/ruby/gems/*/gems/$1-* $GEM_HOME/gems/$1; do
+  local dir
+  for dir in $HOME/workspace/$1 $HOME/$1 $1 /Volumes/Finn/$1 $RUBY_PATH/$RUBY_VERSION/lib/ruby/gems/*/gems/$1-* $GEM_HOME/gems/$1-*; do
     if [[ -d "$dir" ]]; then
       echo $dir
       break
     fi
   done
-  unset dir
 }
 
 # do stuff with project
 with_project() {
-  target=$(d "$1")
+  local target=$(d "$1")
   if [[ $target ]]; then
     echo "$2 $target"
     "$2" "$target"
   else
     echo "unknown project"
   fi
-  unset target
 }
 
 # cd to project
