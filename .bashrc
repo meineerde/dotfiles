@@ -257,7 +257,7 @@ cat() {
 
 # directory for project
 d() {
-  for dir in $HOME/workspace/$1 $HOME/$1 $1 /Volumes/Finn/$1 $RUBY_PATH/$RUBY_VERSION/lib/ruby/gems/*/gems/$1-*; do
+  for dir in $HOME/workspace/$1 $HOME/$1 $1 /Volumes/Finn/$1 $RUBY_PATH/$RUBY_VERSION/lib/ruby/gems/*/gems/$1-* $GEM_HOME/gems/$1; do
     if [[ -d "$dir" ]]; then
       echo $dir
       break
