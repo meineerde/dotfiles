@@ -249,7 +249,7 @@ alias redcar="wrapped_redcar --fork"
 # if cat is called on a directory, call ls instead
 cat() {
   if [[ $# = 1 ]] && [[ -d $1 ]]; then
-    ls $1
+    ls "$1"
   else
     /usr/bin/env cat "$@"
   fi
@@ -258,7 +258,7 @@ cat() {
 # directory for project
 d() {
   for dir in $HOME/workspace/$1 $HOME/$1 $1 /Volumes/Finn/$1 $RUBY_PATH/$RUBY_VERSION/lib/ruby/gems/*/gems/$1-*; do
-    if [[ -d $dir ]]; then
+    if [[ -d "$dir" ]]; then
       echo $dir
       break
     fi
@@ -268,10 +268,10 @@ d() {
 
 # do stuff with project
 with_project() {
-  target=$(d $1)
+  target=$(d "$1")
   if [[ $target ]]; then
-    echo $2 $target
-    $2 $target
+    echo "$2 $target"
+    "$2" "$target"
   else
     echo "unknown project"
   fi
@@ -279,10 +279,10 @@ with_project() {
 }
 
 # cd to project
-c() { with_project $1 cd; }
+c() { with_project "$1" cd; }
 
 # open project in editor
-e() { with_project $1 $EDITOR; }
+e() { with_project "$1" "$EDITOR"; }
 
 # Enable programmable completion features.
 if [[ -f /etc/bash_completion ]]; then . /etc/bash_completion; fi
