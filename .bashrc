@@ -258,9 +258,22 @@ cat() {
 }
 
 # directory for project
+project_dirs() {
+  local dirs="$HOME/workspace/__path__:$HOME/__path__:./__path__:/Volumes/Finn/__path__:$RUBY_PATH/$RUBY_VERSION/lib/ruby/gems/*/gems/__gempath__:$GEM_HOME/gems/__gempath__"
+  if [[ -n "$1" ]]; then
+    dirs="${dirs//__gempath__/__path__-*}"
+    echo  ${dirs//__path__/$1}
+  else
+    dirs="${dirs//\/__gempath__/}"
+    echo  ${dirs//\/__path__/}
+  fi
+}
+
 d() {
+  local dirs="$(project_dirs "$1")"
+  local IFS=$':'
   local dir
-  for dir in $HOME/workspace/$1 $HOME/$1 $1 /Volumes/Finn/$1 $RUBY_PATH/$RUBY_VERSION/lib/ruby/gems/*/gems/$1-* $GEM_HOME/gems/$1-*; do
+  for dir in $dirs; do
     if [[ -d "$dir" ]]; then
       echo $dir
       break
@@ -289,6 +302,18 @@ e() { with_project "$1" "$EDITOR"; }
 if [[ -f /etc/bash_completion ]]; then . /etc/bash_completion; fi
 if [[ -f ~/.tabtab.bash ]]; then . ~/.tabtab.bash; fi
 set show-all-if-ambiguous on
+
+# bash completion with with_project and functions using it
+_with_project() {
+  local CDPATH="$(project_dirs):$CDPATH"
+  _cd
+}
+
+if shopt -q cdable_vars; then
+  complete -v -F _with_project -o nospace c e with_project
+else
+  complete -F _with_project -o nospace c e with_project
+fi
 
 # Clean up.
 unset ps1_user ps1_host ps1_vcs ps_ruby ps1_pwd ps1_ruby script this dir bin
