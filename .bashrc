@@ -40,6 +40,13 @@ if [[ -s $HOME/.rvm/scripts/rvm ]] ; then
   source $HOME/.rvm/scripts/rvm ;
 fi
 
+# REE tweaks to make it faster for specs.
+export RUBY_HEAP_MIN_SLOTS=1000000
+export RUBY_HEAP_SLOTS_INCREMENT=1000000
+export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
+export RUBY_GC_MALLOC_LIMIT=1000000000
+export RUBY_HEAP_FREE_MIN=500000
+
 # NVM
 [[ -s $HOME/.nvm/nvm.sh ]] && source $HOME/.nvm/nvm.sh
 
@@ -234,16 +241,17 @@ alias ciam='git ci -am'
 alias got='git'
 alias goit='git'
 
-alias ss="script/server -b 127.0.0.1"
-alias sc="script/console"
-
+alias be="bundle exec"
 alias rs="rails server -b 127.0.0.1"
 alias rc="rails console"
+ss() { if [[ -x script/server ]]; then script/server -b 127.0.0.1 $@; else rs $@; fi }
+sc() { if [[ -x script/console ]]; then script/console $@; else rc $@; fi }
+
 
 # if cat is called on a directory, call ls instead
 cat() {
   if [[ $# = 1 ]] && [[ -d $1 ]]; then
-    ls $1
+    ls "$1"
   else
     /usr/bin/env cat "$@"
   fi
@@ -251,25 +259,24 @@ cat() {
 
 # directory for project
 d() {
-  for dir in $HOME/workspace/$1 $HOME/$1 $1 /Volumes/Finn/$1 $RUBY_PATH/$RUBY_VERSION/lib/ruby/gems/*/gems/$1-*; do
-    if [[ -d $dir ]]; then
+  local dir
+  for dir in $HOME/workspace/$1 $HOME/$1 $1 /Volumes/Finn/$1 $RUBY_PATH/$RUBY_VERSION/lib/ruby/gems/*/gems/$1-* $GEM_HOME/gems/$1-*; do
+    if [[ -d "$dir" ]]; then
       echo $dir
       break
     fi
   done
-  unset dir
 }
 
 # do stuff with project
 with_project() {
-  target=$(d $1)
+  local target=$(d "$1")
   if [[ $target ]]; then
-    echo $2 $target
-    $2 $target
+    echo "$2 $target"
+    "$2" "$target"
   else
     echo "unknown project"
   fi
-  unset target
 }
 
 # cd to project
