@@ -286,7 +286,7 @@ with_project() {
   local target=$(d "$1")
   if [[ $target ]]; then
     echo "$2 $target"
-    "$2" "$target"
+    $2 "$target"
   else
     echo "unknown project"
   fi
