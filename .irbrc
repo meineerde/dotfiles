@@ -1,3 +1,5 @@
+require 'rubygems'
+
 # Rails will log to irb
 require 'logger'
 if ENV.include?('RAILS_ENV') && !Object.const_defined?('RAILS_DEFAULT_LOGGER')
