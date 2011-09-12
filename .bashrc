@@ -259,7 +259,7 @@ cat() {
 
 # directory for project
 project_dirs() {
-  local dirs="$HOME/workspace/__path__:$HOME/__path__:./__path__:/Volumes/Finn/__path__:$RUBY_PATH/$RUBY_VERSION/lib/ruby/gems/*/gems/__gempath__:$GEM_HOME/gems/__gempath__"
+  local dirs="$HOME/workspace/__path__:$HOME/__path__:./__path__:/Volumes/Finn/__path__:$RUBY_PATH/$RUBY_VERSION/lib/ruby/gems/*/gems/__gempath__:$GEM_HOME/gems/__gempath__:$GEM_HOME/gems/__path__"
   if [[ -n "$1" ]]; then
     dirs="${dirs//__gempath__/__path__-*}"
     echo  ${dirs//__path__/$1}
