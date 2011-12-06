@@ -25,3 +25,5 @@
 	user = meineerde
 [branch]
 	autosetupmerge = true
+[http]
+	postBuffer = 524288000
