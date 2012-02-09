@@ -26,4 +26,4 @@
 [branch]
 	autosetupmerge = true
 [http]
-	postBuffer = 524288000
+	postBuffer = 5242880000
