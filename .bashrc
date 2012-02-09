@@ -246,7 +246,10 @@ alias rs="rails server -b 127.0.0.1"
 alias rc="rails console"
 ss() { if [[ -x script/server ]]; then script/server -b 127.0.0.1 $@; else rs $@; fi }
 sc() { if [[ -x script/console ]]; then script/console $@; else rc $@; fi }
-
+http() {
+  port=${1:-8000}
+  python -m SimpleHTTPServer $port
+}
 
 # if cat is called on a directory, call ls instead
 cat() {
