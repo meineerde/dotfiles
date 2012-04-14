@@ -63,20 +63,6 @@ USER_EMAIL="web@meine-er.de"
 if [[ $- =~ 'i' ]]; then
   # Disable XON/XOFF flow control (^s/^q).
   stty -ixon
-
-  # Setting up git.
-  if [[ -f ~/.gitconfig ]]; then
-    user_name="$(git config --global user.name)"
-    user_email="$(git config --global user.email)"
-
-    if [[ "$user_name" != "$USER_NAME" ]]; then
-      echo "WARNING: git's user.name is $user_name"
-    fi
-    if [[ "$user_email" != "$USER_EMAIL" ]]; then
-      echo "WARNING: git's user.email is $user_email"
-    fi
-    unset user_name user_email
-  fi
 fi
 
 . $DOTFILES/.git_completion
