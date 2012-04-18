@@ -36,8 +36,10 @@ export HISTCONTROL=ignoreboth
 shopt -s histappend >/dev/null 2>&1
 
 # Load RVM
-if [[ -s $HOME/.rvm/scripts/rvm ]] ; then
-  source $HOME/.rvm/scripts/rvm ;
+if [[ -s $HOME/.rvm/scripts/rvm ]]; then
+  source $HOME/.rvm/scripts/rvm
+  # tab completion for RVM
+  [[ -r $rvm_path/scripts/completion ]] && . $rvm_path/scripts/completion
 fi
 
 # REE tweaks to make it faster for specs.
@@ -307,3 +309,5 @@ fi
 
 # Clean up.
 unset ps1_user ps1_host ps1_vcs ps_ruby ps1_pwd ps1_ruby script this dir bin
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
