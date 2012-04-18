@@ -23,6 +23,8 @@
 	editor = mate -wl1
 [github]
 	user = meineerde
+[credential]
+	helper=osxkeychain
 [branch]
 	autosetupmerge = true
 [http]
