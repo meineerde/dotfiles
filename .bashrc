@@ -87,23 +87,19 @@ case `uname` in
 
     alias ls='ls -G'
 
-    python="$(which python)"
-    python_path=""
     # Find correct python bin path with multiple Pythons installed by Homebrew
-    if [[ "$python" =~ ^/usr/local/bin ]]; then
+    if [[ "$(which python)" =~ ^/usr/local/bin ]]; then
       # Python comes from Homebrew
-      target=$(readlink "$python")
-      if [[ $? ]]; then
-        # the python binary is a symlink
-        python_path=$(cd "$(dirname "$python")" && cd "$(dirname "$target")" && pwd)
-      fi
+      for p in $(ls -1d /usr/local/Cellar/python/*/bin | sort -r); do
+        export PATH=$p:$PATH
+      done
     fi
-    for p in "$python_path" /usr/local/*/bin /usr/*/bin; do
+    for p in /usr/local/*/bin /usr/*/bin; do
       if [[ -n "$p" ]]; then
         export PATH=$p:$PATH
       fi
     done
-    unset p python python_path
+    unset p
 
     export PG_DATA=/usr/local/var/postgres
 
