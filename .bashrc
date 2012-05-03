@@ -81,7 +81,7 @@ case `uname` in
     #   export SVN_EDITOR="subl -nw"
     # elif [[ $(which mate) ]]; then
     if [[ $(which mate) ]]; then
-      export EDITOR="mate"
+      export EDITOR="mate -wl1"
       export SVN_EDITOR="mate -wl1"
     fi
 
