@@ -76,11 +76,11 @@ case `uname` in
 
     # this requires a symlink from "/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl"
     # into $PATH, e.g. ~/bin/subl
-    # if [[ $(which subl) ]]; then
-    #   export EDITOR="subl -n"
-    #   export SVN_EDITOR="subl -nw"
-    # elif [[ $(which mate) ]]; then
-    if [[ $(which mate) ]]; then
+    if [[ $(which subl) ]]; then
+      export EDITOR="subl -n"
+      export SVN_EDITOR="subl -nw"
+    elif [[ $(which mate) ]]; then
+    # if [[ $(which mate) ]]; then
       export EDITOR="mate -wl1 -n"
       export SVN_EDITOR="mate -wl1 -n"
     fi
