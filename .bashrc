@@ -79,6 +79,7 @@ case `uname` in
     if [[ $(which subl) ]]; then
       export EDITOR="subl -n"
       export SVN_EDITOR="subl -nw"
+      alias mate=subl
     elif [[ $(which mate) ]]; then
     # if [[ $(which mate) ]]; then
       export EDITOR="mate -wl1 -n"
