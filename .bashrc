@@ -219,6 +219,11 @@ alias use='rvm use'
 alias gems='gem list | less'
 alias less='less -R'
 
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+
 alias gsvn='git svn'
 alias gdiff='git diff'
 alias st='git st'
@@ -230,6 +235,7 @@ alias goit='git'
 alias be="bundle exec"
 alias rs="rails server -b 127.0.0.1"
 alias rc="rails console"
+
 ss() { if [[ -x script/server ]]; then script/server -b 127.0.0.1 $@; else rs $@; fi }
 sc() { if [[ -x script/console ]]; then script/console $@; else rc $@; fi }
 http() {
