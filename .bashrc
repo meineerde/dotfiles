@@ -196,10 +196,10 @@ export PS1="$PS1$ps1_pwd$ps1_vcs$ps1_ruby \$ "
 [[ -x /usr/bin/lesspipe ]] && eval "$(lesspipe)"
 
 # If this is an xterm set the title to user@host:dir.
-case "$TERM" in
-  xterm*|rxvt*) export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"' ;;
-  *) ;;
-esac
+#case "$TERM" in
+#  xterm*|rxvt*) export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"' ;;
+#  *) ;;
+#esac
 
 # Enable color support. Don't add ls here, it behaves different on Darwin/BSD.
 if [[ -x /usr/bin/dircolors ]]; then eval "$(dircolors -b)"; fi
