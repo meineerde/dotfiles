@@ -32,15 +32,6 @@ namespace :install do
     Rake::Task[:texmf_folder].invoke
   end
 
-  desc "Update the janus bundle"
-  task :vim => :submodules do
-    install :vim, *%w(.vim .vimrc.local .janus.rake)
-
-    Dir.chdir File.join(File.dirname(__FILE__), ".vim") do
-      system "rake"
-    end
-  end
-
-  task :all => [:texmf, :vim]
+  task :all => [:texmf]
 end
 
