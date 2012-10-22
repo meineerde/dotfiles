@@ -2,7 +2,7 @@ desc "installs everything"
 task :install => "install:all"
 namespace :install do
 
-  def install name, *files
+  def files(name, *files)
     desc "installs #{name} configuration"
     task(name) do
       Dir[*files].collect do |file|
@@ -17,9 +17,9 @@ namespace :install do
     task :all => name
   end
 
-  install :irb, ".irbrc", ".config/irb/*.rb"
-  install :dot, *%w(.bash_profile .bashrc .gemrc .global_gitignore .gitconfig .ackrc)
-  install :bin, "bin/*"
+  files :irb, ".irbrc", ".config/irb/*.rb"
+  files :dot, *%w(.bash_profile .bashrc .gemrc .global_gitignore .gitconfig .ackrc .rvmrc)
+  files :bin, "bin/*"
 
   desc "Update all submodules"
   task :submodules do
@@ -28,7 +28,7 @@ namespace :install do
 
   desc "installs the custom texmf folder"
   task :texmf => :submodules do
-    install :texmf_folder, "texmf"
+    files :texmf_folder, "texmf"
     Rake::Task[:texmf_folder].invoke
   end
 
