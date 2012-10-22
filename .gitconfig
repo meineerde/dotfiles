@@ -20,7 +20,7 @@
 	default = matching
 [core]
 	autocrlf = false
-	editor = mate -wl1
+	editor = subl -nw
 [github]
 	user = meineerde
 [credential]
