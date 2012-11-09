@@ -229,6 +229,7 @@ alias gdiff='git diff'
 alias st='git st'
 alias log='git lg'
 alias ciam='git ci -am'
+alias cia='git ci -a'
 alias got='git'
 alias goit='git'
 
