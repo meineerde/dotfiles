@@ -227,14 +227,15 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
+alias g=git
+alias got='git'
+alias goit='git'
 alias gsvn='git svn'
 alias gdiff='git diff'
 alias st='git st'
 alias log='git lg'
 alias ciam='git ci -am'
 alias cia='git ci -a'
-alias got='git'
-alias goit='git'
 
 alias be="bundle exec"
 alias rs="rails server -b 127.0.0.1"
