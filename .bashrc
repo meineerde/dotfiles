@@ -33,6 +33,9 @@ bind Space:magic-space
 # Bash History
 export HISTIGNORE="&:ls:ll:la:l.:pwd:exit:clear"
 export HISTCONTROL=ignoreboth
+export HISTSIZE=1000
+# never ending history file
+export HISTFILESIZE=""
 shopt -s histappend >/dev/null 2>&1
 
 # Load RVM
