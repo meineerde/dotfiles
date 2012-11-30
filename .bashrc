@@ -70,7 +70,14 @@ if [[ $- =~ 'i' ]]; then
   stty -ixon
 fi
 
-. $DOTFILES/.git_completion
+if [[ -d "$DOTFILES/bash_completion.d" ]]; then
+  for i in "$DOTFILES/bash_completion.d/*"; do
+    if [[ -r "$i" ]]; then
+      . "$i"
+    fi
+  done
+  unset i
+fi
 
 # OS specific config.
 case `uname` in
