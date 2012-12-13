@@ -1,3 +1,5 @@
+require 'fileutils'
+
 desc "installs everything"
 task :install => "install:all"
 namespace :install do
@@ -32,6 +34,48 @@ namespace :install do
     Rake::Task[:texmf_folder].invoke
   end
 
-  task :all => [:texmf]
+  desc "Setup SublimeText2"
+  task :sublime do
+  end
+
+  desc "Sublime Configuration"
+  task :sublime_config do
+    sublime_path = "#{ENV['HOME']}/Library/Application Support/Sublime Text 2"
+    df_dir = File.expand_path("../sublime", __FILE__)
+
+    FileUtils.ln_sf("#{df_dir}/Preferences.sublime-settings", "#{sublime_path}/Packages/User/Preferences.sublime-settings")
+  end
+
+  desc "Install SublimeText2 Plugins"
+  task :sublime_plugins do
+    require 'json'
+    package_control = "#{ENV['HOME']}/Library/Application Support/Sublime Text 2/Packages/User/Package Control.sublime-settings"
+    packages = JSON.parse(File.read(package_control))
+
+    packages["installed_packages"] |= %w[
+      CTags
+      Git
+      LaTeXTools
+      SideBarEnhancements
+      SublimeTODO
+      Theme - Soda
+      TODO Control
+    ]
+
+    File.open(package_control, "w") do |f|
+      f.write(JSON.pretty_generate(packages))
+    end
+  end
+
+  sublime_path = "#{ENV['HOME']}/Library/Application Support/Sublime Text 2"
+  if File.exist?(sublime_path)
+    task :sublime => :sublime_config
+    if File.exist?("#{sublime_path}/Packages/User/Package Control.sublime-settings")
+      task :sublime => :sublime_plugins
+    end
+  end
+
+
+  task :all => [:texmf, :sublime]
 end
 
