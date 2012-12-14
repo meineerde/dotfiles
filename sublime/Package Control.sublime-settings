@@ -1,0 +1,20 @@
+{
+	"installed_packages":
+	[
+		"AdvancedNewFile",
+		"CTags",
+		"Git",
+		"LaTeXTools",
+		"MarkdownEditing",
+		"Package Control",
+		"SideBarEnhancements",
+		"SublimeTODO",
+		"Theme - Soda",
+		"TODO Control",
+		"Tomorrow Color Schemes"
+	],
+	"repositories":
+	[
+		"https://sublime.wbond.net/testing/packages.json"
+	]
+}

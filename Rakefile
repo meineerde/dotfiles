@@ -43,42 +43,9 @@ namespace :install do
     sublime_path = "#{ENV['HOME']}/Library/Application Support/Sublime Text 2"
     df_dir = File.expand_path("../sublime", __FILE__)
 
-    FileUtils.ln_sf("#{df_dir}/Preferences.sublime-settings", "#{sublime_path}/Packages/User/Preferences.sublime-settings")
+    FileUtils.ln_sf(df_dir, "#{sublime_path}/Packages/User") if File.exist?(sublime_path)
   end
-
-  desc "Install SublimeText2 Plugins"
-  task :sublime_plugins do
-    require 'json'
-    package_control = "#{ENV['HOME']}/Library/Application Support/Sublime Text 2/Packages/User/Package Control.sublime-settings"
-    packages = JSON.parse(File.read(package_control))
-
-    packages["installed_packages"] = [
-      "AdvancedNewFile",
-      "CTags",
-      "DetectSyntax",
-      "Git",
-      "LaTeXTools",
-      "MarkdownEditing",
-      "SideBarEnhancements",
-      "SublimeTODO",
-      "Theme - Soda",
-      "TODO Control",
-      "Tomorrow Color Schemes"
-    ]
-
-    File.open(package_control, "w") do |f|
-      f.write(JSON.pretty_generate(packages))
-    end
-  end
-
-  sublime_path = "#{ENV['HOME']}/Library/Application Support/Sublime Text 2"
-  if File.exist?(sublime_path)
-    task :sublime => :sublime_config
-    if File.exist?("#{sublime_path}/Packages/User/Package Control.sublime-settings")
-      task :sublime => :sublime_plugins
-    end
-  end
-
+  task :sublime => :sublime_config
 
   task :all => [:texmf, :sublime]
 end
