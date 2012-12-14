@@ -4,6 +4,9 @@
 
   "font_face": "Inconsolata-dz",
   "font_size": 12,
+  "font_options": [
+    "subpixel_antialias"
+  ],
 
   "tab_size": 2,
   "translate_tabs_to_spaces": true,
@@ -17,6 +20,7 @@
 
   "bold_folder_labels": true,
   "draw_minimap_border": true,
+  "draw_white_space": "all",
   "gutter": true,
   "highlight_line": true,
   "highlight_modified_tabs": true,
