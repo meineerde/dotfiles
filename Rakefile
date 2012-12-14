@@ -52,14 +52,16 @@ namespace :install do
     package_control = "#{ENV['HOME']}/Library/Application Support/Sublime Text 2/Packages/User/Package Control.sublime-settings"
     packages = JSON.parse(File.read(package_control))
 
-    packages["installed_packages"] |= %w[
-      CTags
-      Git
-      LaTeXTools
-      SideBarEnhancements
-      SublimeTODO
-      Theme - Soda
-      TODO Control
+    packages["installed_packages"] = [
+      "AdvancedNewFile",
+      "CTags",
+      "Git",
+      "LaTeXTools",
+      "SideBarEnhancements",
+      "SublimeTODO",
+      "Theme - Soda",
+      "TODO Control",
+      "Tomorrow Color Schemes"
     ]
 
     File.open(package_control, "w") do |f|
