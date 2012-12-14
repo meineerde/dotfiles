@@ -55,8 +55,10 @@ namespace :install do
     packages["installed_packages"] = [
       "AdvancedNewFile",
       "CTags",
+      "DetectSyntax",
       "Git",
       "LaTeXTools",
+      "MarkdownEditing",
       "SideBarEnhancements",
       "SublimeTODO",
       "Theme - Soda",
