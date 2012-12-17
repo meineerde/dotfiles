@@ -28,6 +28,6 @@
 [credential]
 	helper=osxkeychain
 [branch]
-	autosetupmerge = true
+	autosetupmerge = always
 [http]
 	postBuffer = 5242880000
