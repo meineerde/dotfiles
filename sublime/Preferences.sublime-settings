@@ -56,7 +56,6 @@
     "*.pdf"
   ],
   "folder_exclude_patterns": [
-    "data",
     ".git",
     ".svn",
     ".hg",
