@@ -19,7 +19,7 @@
 	interactive = auto
 	ui = auto
 [push]
-	default = matching
+	default = tracking
 [core]
 	autocrlf = false
 	editor = subl -nw
