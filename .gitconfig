@@ -9,6 +9,8 @@
 	cm = commit
 	p = push
 	pf = push --force
+	fp = push --force
+	su = submodule update --init
 [user]
 	name = Holger Just
 	email = "hjust@meine-er.de"
