@@ -1,9 +1,11 @@
 {
+	"auto_upgrade_last_run": null,
 	"installed_packages":
 	[
 		"AdvancedNewFile",
 		"CTags",
 		"Git",
+		"GitGutter",
 		"LaTeXTools",
 		"MarkdownEditing",
 		"Package Control",
