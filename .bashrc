@@ -241,9 +241,7 @@ alias got='git'
 alias goit='git'
 alias gsvn='git svn'
 alias gdiff='git diff'
-complete -o default -o nospace -F _git_diff gdiff
 alias st='git st'
-complete -o default -o nospace -F _git_st st
 alias log='git lg'
 alias ciam='git ci -am'
 alias cia='git ci -a'
