@@ -11,6 +11,7 @@
 	pf = push --force
 	fp = push --force
 	su = submodule update --init
+	addnw = !sh -c 'git diff -w --no-color "$@" | git apply --cached --ignore-whitespace' -
 [user]
 	name = Holger Just
 	email = "hjust@meine-er.de"
