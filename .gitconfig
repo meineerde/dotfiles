@@ -26,6 +26,7 @@
 [core]
 	autocrlf = false
 	editor = subl -nw
+	excludesfile = ~/.gitignore_global
 [github]
 	user = meineerde
 [credential]

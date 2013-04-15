@@ -20,7 +20,7 @@ namespace :install do
   end
 
   files :irb, ".irbrc", ".config/irb/*.rb"
-  files :dot, *%w(.bash_profile .bashrc .gemrc .global_gitignore .gitconfig .ackrc .rvmrc)
+  files :dot, *%w(.bash_profile .bashrc .gemrc .gitignore_global .gitconfig .ackrc .rvmrc)
   files :bin, "bin/*"
 
   desc "Update all submodules"
