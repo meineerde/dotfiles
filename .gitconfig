@@ -4,7 +4,7 @@
 	st = status
 	co = checkout
 	merge = merge --no-ff
-	pull = pull --no-ff
+	pull = pull --rebase
 	ci = commit
 	cm = commit
 	p = push
