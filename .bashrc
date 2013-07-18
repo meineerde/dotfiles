@@ -161,6 +161,8 @@ esac
 [[ -z "$SVN_EDITOR" ]] && SVN_EDITOR="$EDITOR"
 git config --global --replace-all core.editor "$SVN_EDITOR"
 
+# Appliction config
+export PLANIO_SKIP_AMA=1
 
 # Don't show user name if it's me. make root red.
 case $USER in
