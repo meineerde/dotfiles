@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+require 'rubygems' # 1.8.7
+require 'json'
+
+if STDIN.tty?
+  if File.exist?("/usr/bin/pbpaste")
+    data = IO.popen('/usr/bin/pbpaste', 'r+').read
+  else
+    $stderr.puts 'your_command | json [--color]'
+    exit 1
+  end
+else
+  data = STDIN.read
+end
+
+json = JSON.parse(data)
+if ARGV.include?('--color')
+  require 'ap'
+  ap json
+else
+  puts JSON.pretty_generate(json)
+end
