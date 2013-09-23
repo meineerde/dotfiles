@@ -14,7 +14,12 @@ else
   data = STDIN.read
 end
 
-json = JSON.parse(data)
+begin
+  json = JSON.parse(data)
+rescue JSON::ParserError => err
+  $stderr.puts err.message
+  exit 1
+end
 if ARGV.include?('--color')
   require 'ap'
   ap json
