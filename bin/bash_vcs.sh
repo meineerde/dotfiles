@@ -1,6 +1,8 @@
 # I use this in my .bashrc to have nice VCS stuff.
 # Tim Felgentreff (09/20/01): Simplify for speedup, use the git-completion script for git
 
+. $HOME/bin/git-prompt.sh
+
 __prompt_command() {
   if [[ -z $NOPROMPT ]]; then
     local vcs base_dir sub_dir ref last_command _bold _normal
