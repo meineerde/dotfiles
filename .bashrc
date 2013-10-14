@@ -71,7 +71,7 @@ if [[ $- =~ 'i' ]]; then
 fi
 
 if [[ -d "$DOTFILES/bash_completion.d" ]]; then
-  for i in "$DOTFILES/bash_completion.d/*"; do
+  for i in $DOTFILES/bash_completion.d/*; do
     if [[ -r "$i" ]]; then
       . "$i"
     fi
