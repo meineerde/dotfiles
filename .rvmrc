@@ -1,1 +1,2 @@
 rvm_auto_reload_flag=1
+rvm_verify_downloads_flag=0
