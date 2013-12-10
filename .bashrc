@@ -69,6 +69,8 @@ fi
 case `uname` in
   Darwin)
     export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home"
+    # For Ruby to find the mysql libraries
+    export DYLD_LIBRARY_PATH=/usr/local/mysql/lib:$DYLD_LIBRARY_PATH
 
     # this requires a symlink from "/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl"
     # into $PATH, e.g. ~/bin/subl
