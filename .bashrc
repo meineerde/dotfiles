@@ -38,20 +38,6 @@ export HISTSIZE=1000
 export HISTFILESIZE=""
 shopt -s histappend >/dev/null 2>&1
 
-# Load RVM
-if [[ -s $HOME/.rvm/scripts/rvm ]]; then
-  source $HOME/.rvm/scripts/rvm
-  # tab completion for RVM
-  [[ -r $rvm_path/scripts/completion ]] && . $rvm_path/scripts/completion
-fi
-
-# REE tweaks to make it faster for specs.
-export RUBY_HEAP_MIN_SLOTS=1000000
-export RUBY_HEAP_SLOTS_INCREMENT=1000000
-export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
-export RUBY_GC_MALLOC_LIMIT=1000000000
-export RUBY_HEAP_FREE_MIN=500000
-
 # NVM
 [[ -s $HOME/.nvm/nvm.sh ]] && source $HOME/.nvm/nvm.sh
 
@@ -155,6 +141,21 @@ case `uname` in
     ;;
   *) echo "OS unknown to bashrc." ;;
 esac
+
+# Load RVM
+if [[ -s $HOME/.rvm/scripts/rvm ]]; then
+  source $HOME/.rvm/scripts/rvm
+  # tab completion for RVM
+  [[ -r $rvm_path/scripts/completion ]] && . $rvm_path/scripts/completion
+fi
+
+# REE tweaks to make it faster for specs.
+export RUBY_HEAP_MIN_SLOTS=1000000
+export RUBY_HEAP_SLOTS_INCREMENT=1000000
+export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
+export RUBY_GC_MALLOC_LIMIT=1000000000
+export RUBY_HEAP_FREE_MIN=500000
+
 
 # setting up editor if not yet done
 [[ -z "$EDITOR" ]] && EDITOR="nano"
