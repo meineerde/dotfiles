@@ -75,13 +75,15 @@ case `uname` in
     # this requires a symlink from "/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl"
     # into $PATH, e.g. ~/bin/subl
     if [[ $(which subl) ]]; then
-      export EDITOR="subl -n"
-      export SVN_EDITOR="subl -nw"
+      export EDITOR="subl -nw"
+      export BACKGROUND_EDITOR="subl -n"
+      export SVN_EDITOR="$EDITOR"
       alias mate=subl
     elif [[ $(which mate) ]]; then
     # if [[ $(which mate) ]]; then
-      export EDITOR="mate -wl1 -n"
-      export SVN_EDITOR="mate -wl1 -n"
+      export EDITOR="mate -wl1"
+      export BACKGROUND_EDITOR="mate -l1"
+      export SVN_EDITOR="$EDITOR"
     fi
 
     alias ls='ls -G'
@@ -310,7 +312,7 @@ with_project() {
 c() { with_project "$1" cd; }
 
 # open project in editor
-e() { with_project "$1" "$EDITOR"; }
+e() { with_project "$1" "$BACKGROUND_EDITOR"; }
 
 # Enable programmable completion features.
 if [[ -f /etc/bash_completion ]]; then . /etc/bash_completion; fi
