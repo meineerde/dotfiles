@@ -4,7 +4,6 @@
 	st = status
 	co = checkout
 	merge = merge --no-ff
-	pull = pull --rebase
 	ci = commit
 	cm = commit
 	p = push
@@ -32,6 +31,7 @@
 [credential]
 	helper=osxkeychain
 [branch]
-	autosetupmerge = always
+	autosetupmerge = true
+	autosetuprebase = always
 [http]
 	postBuffer = 5242880000
