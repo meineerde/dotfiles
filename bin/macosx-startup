@@ -1,0 +1,2 @@
+#!/bin/bash
+launchctl setenv PATH "/usr/local/bin:$PATH"
