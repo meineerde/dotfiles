@@ -311,7 +311,7 @@ with_project() {
 c() { with_project "$1" cd; }
 
 # open project in editor
-e() { with_project "$1" "$BACKGROUND_EDITOR"; }
+e() { with_project "${1:-.}" "$BACKGROUND_EDITOR"; }
 
 # Enable programmable completion features.
 if [[ -f /etc/bash_completion ]]; then . /etc/bash_completion; fi
