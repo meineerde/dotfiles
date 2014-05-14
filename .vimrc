@@ -10,3 +10,6 @@ set shell=/bin/bash\ -l
 
 " 2 spaces soft tabstops
 set ts=2 sts=2 sw=2 expandtab
+
+set background=dark
+colorscheme base16-tomorrow
