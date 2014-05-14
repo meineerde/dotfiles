@@ -332,4 +332,4 @@ fi
 # Clean up.
 unset ps1_user ps1_host ps1_vcs ps_ruby ps1_pwd ps1_ruby script this dir bin
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
