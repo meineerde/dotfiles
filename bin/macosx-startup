@@ -1,2 +1,6 @@
 #!/bin/bash
+
+# This script should be added as a login-item to the current OSX user
+# In order for the correct PATH to be set for all programs
+
 launchctl setenv PATH "/usr/local/bin:$PATH"
