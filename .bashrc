@@ -162,7 +162,6 @@ export RUBY_HEAP_FREE_MIN=500000
 # setting up editor if not yet done
 [[ -z "$EDITOR" ]] && EDITOR="nano"
 [[ -z "$SVN_EDITOR" ]] && SVN_EDITOR="$EDITOR"
-git config --global --replace-all core.editor "$SVN_EDITOR"
 
 # Appliction config
 export PLANIO_SKIP_AMA=1
