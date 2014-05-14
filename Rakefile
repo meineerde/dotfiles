@@ -24,5 +24,10 @@ namespace :install do
   files :bin, "bin/*"
 
   files :vim, *%w[.vim .vimrc]
-end
+  task :vim => [:dot, :bin, :submodules]
 
+  desc "Update all submodules"
+  task :submodules do
+    sh "git submodule update --init"
+  end
+end
