@@ -8,7 +8,7 @@ namespace :install do
     desc "installs #{name} configuration"
     task(name) do
       Dir[*files].collect do |file|
-        full = File.join File.dirname(__FILE__), file
+        full = File.join File.dirname(__FILE__), File.basename(file, '.dotfile')
         Dir.chdir ENV["HOME"] do
           mkdir_p File.dirname(file)
           File.delete(file) if (File.exist? file and File.directory? full)
@@ -20,7 +20,7 @@ namespace :install do
   end
 
   files :irb, ".irbrc", ".config/irb/*.rb"
-  files :dot, *%w(.bash_profile .bashrc .gemrc .gitignore_global .gitconfig .ackrc .rvmrc)
+  files :dot, *%w(.bash_profile .bashrc .gemrc .gitignore_global .gitconfig .ackrc .rvmrc.dotfile)
   files :bin, "bin/*"
 
   desc "Update all submodules"
