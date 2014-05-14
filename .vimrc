@@ -13,3 +13,6 @@ set ts=2 sts=2 sw=2 expandtab
 
 syntax enable
 colorscheme Tomorrow-Night-Bright
+
+" Make backspace key work like most other apps
+set backspace=indent,eol,start
