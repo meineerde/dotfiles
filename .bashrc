@@ -180,7 +180,7 @@ ps1_host='\h'
 
 . $HOME/bin/bash_vcs.sh
 ps1_vcs='$(__prompt_command)'
-ps1_ruby=' \[\e[0;34m\]$(rvm-prompt u " " g)\[\e[00m\]'
+ps1_ruby=' \[\e[0;34m\]$(rvm-prompt v g)\[\e[00m\]'
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
@@ -197,7 +197,7 @@ short_pwd() {
     echo "$FIXED_PWD"
   fi
 }
-ps1_pwd='\[\e[1;30m\]$(short_pwd)\[\e[00m\]'
+ps1_pwd='$(short_pwd)'
 #ps1_pwd='\[\e[1;30m\]\W\[\e[00m\]'
 
 # Building $PS1.
@@ -299,7 +299,7 @@ d() {
 with_project() {
   local target=$(d "$1")
   if [[ $target ]]; then
-    echo "$2 $target"
+    echo -e "\033[0;34m$2 \"$target\"\033[00m"
     $2 "$target"
   else
     echo "unknown project"
