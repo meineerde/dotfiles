@@ -74,19 +74,9 @@ case `uname` in
   Darwin)
     export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home"
 
-    # this requires a symlink from "/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl"
-    # into $PATH, e.g. ~/bin/subl
-    if [[ $(which subl) ]]; then
-      export EDITOR="subl -nw"
-      export BACKGROUND_EDITOR="subl -n"
-      export SVN_EDITOR="$EDITOR"
-      alias mate=subl
-    elif [[ $(which mate) ]]; then
-    # if [[ $(which mate) ]]; then
-      export EDITOR="mate -wl1"
-      export BACKGROUND_EDITOR="mate -l1"
-      export SVN_EDITOR="$EDITOR"
-    fi
+    export EDITOR="vim"
+    export BACKGROUND_EDITOR="subl -n"
+    export SVN_EDITOR="$EDITOR"
 
     alias ls='ls -G'
 
