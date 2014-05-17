@@ -1176,7 +1176,7 @@
 	<key>Default Bookmark Guid</key>
 	<string>B2BAC230-973A-4B83-9525-4B65FF3E69D1</string>
 	<key>DimBackgroundWindows</key>
-	<true/>
+	<false/>
 	<key>DimInactiveSplitPanes</key>
 	<true/>
 	<key>DimOnlyText</key>
