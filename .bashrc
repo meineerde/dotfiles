@@ -294,7 +294,7 @@ d() {
 with_project() {
   local target=$(d "$1")
   if [[ $target ]]; then
-    echo -e "\033[0;34m$2 \"$target\"\033[00m"
+    echo -e "\033[0;34m$2 $target\033[00m"
     $2 "$target"
   else
     echo "unknown project"
