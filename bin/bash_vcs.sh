@@ -1,8 +1,6 @@
 # I use this in my .bashrc to have nice VCS stuff.
 # Tim Felgentreff (09/20/01): Simplify for speedup, use the git-completion script for git
 
-. $HOME/bin/git-prompt.sh
-
 __prompt_command() {
   if [[ -z $NOPROMPT ]]; then
     local vcs base_dir sub_dir ref last_command _bold _normal
@@ -18,8 +16,8 @@ __prompt_command() {
     }
 
     git_dir() {
-      ref=$(echo -e $(__git_ps1))
-      if [ -z $ref ]; then return 1; fi
+      ref=$(echo -e "$(__git_ps1)")
+      if [ -z "$ref" ]; then return 1; fi
       vcs="git"
       alias pull="git pull"
       alias commit="git commit -v -a"
