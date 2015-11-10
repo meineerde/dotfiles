@@ -80,21 +80,6 @@ case `uname` in
 
     alias ls='ls -G'
 
-    # Find correct python bin path with multiple Pythons installed by Homebrew
-    if [[ "$(which python)" =~ ^/usr/local/bin ]]; then
-      # Python comes from Homebrew
-      export PATH="/usr/local/share/python:$PATH"
-      for p in $(ls -1d /usr/local/Cellar/python/*/bin | sort -r); do
-        export PATH="$p:$PATH"
-      done
-    fi
-    for p in /usr/local/*/bin /usr/*/bin; do
-      if [[ -n "$p" ]]; then
-        export PATH="$p:$PATH"
-      fi
-    done
-    unset p
-
     export PG_DATA=/usr/local/var/postgres
 
     gitx() { open -a GitX $@; }
