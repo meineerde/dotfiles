@@ -22,6 +22,7 @@
 	ui = auto
 [push]
 	default = tracking
+	recurseSubmodules = check
 [core]
 	autocrlf = false
 	excludesfile = ~/.gitignore_global
