@@ -34,4 +34,4 @@
 	autosetupmerge = true
 	autosetuprebase = always
 [http]
-	postBuffer = 5242880000
+	postBuffer = 524288000
