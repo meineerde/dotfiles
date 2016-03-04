@@ -243,6 +243,10 @@ cat() {
   fi
 }
 
+mc() {
+  mkdir "$@" && cd "$@"
+}
+
 # directory for project
 project_dirs() {
   local dirs="__path__:$HOME/workspace/__path__:$HOME/__path__:/Volumes/Finn/__path__:$GEM_HOME/gems/__gempath__:$GEM_HOME/gems/__path__:$GEM_HOME/bundler/gems/__gempath__:$GEM_HOME/bundler/gems/__path__"
