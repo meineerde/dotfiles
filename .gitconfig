@@ -35,3 +35,9 @@
 	autosetuprebase = always
 [http]
 	postBuffer = 524288000
+[fetch]
+	fsckobjects = true
+[transfer]
+	fsckobjects = true
+[receive]
+	fsckobjects = true
