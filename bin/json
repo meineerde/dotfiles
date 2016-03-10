@@ -3,6 +3,19 @@
 require 'rubygems' # 1.8.7
 require 'json'
 
+def print_json(json, colorize=true)
+  if colorize
+    begin
+      require 'awesome_print'
+      ap json
+    rescue LoadError
+      print_json(json, false)
+    end
+  else
+    puts JSON.pretty_generate(json)
+  end
+end
+
 if STDIN.tty?
   if File.exist?("/usr/bin/pbpaste")
     data = IO.popen('/usr/bin/pbpaste', 'r+').read
@@ -20,9 +33,6 @@ rescue JSON::ParserError => err
   $stderr.puts err.message
   exit 1
 end
-if ARGV.include?('--color')
-  require 'ap'
-  ap json
-else
-  puts JSON.pretty_generate(json)
-end
+
+colorize = !ARGV.include?('--no-color') && STDOUT.tty?
+print_json(json, colorize)
