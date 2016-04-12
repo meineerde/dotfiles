@@ -91,6 +91,17 @@ case `uname` in
       . "$(brew --prefix)/etc/bash_completion"
     fi
 
+    # Set the JAVA_HOME environment variable to the correct versob
+    jhome() {
+      if [ "$#" -ge 1 ]; then
+        export JAVA_HOME="$(/usr/libexec/java_home -v "$@")"
+      else
+        export JAVA_HOME="$(/usr/libexec/java_home)"
+      fi
+      echo "JAVA_HOME:" "$JAVA_HOME"
+      java -version
+    }
+
     ;;
   Linux)
     PATH=$PATH:/var/lib/gems/1.8/bin:/var/lib/gems/1.9/bin
