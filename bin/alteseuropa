@@ -1,2 +1,0 @@
-#!/bin/bash
-curl --silent -I http://www.strandbar-mitte.de/alteseuropa/download/Mittagskarte.pdf | grep Last-Modified | grep -o ' .*' | ruby -rdate -pe '$_ = DateTime.parse($_).day == Date.today.day; exit($_ ? 0 : 1)' && curl http://www.strandbar-mitte.de/alteseuropa/download/Mittagskarte.pdf --silent -o /tmp/mittagskarte.pdf && open /tmp/mittagskarte.pdf || echo 'Noch nicht da'
