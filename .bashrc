@@ -1,4 +1,5 @@
-if [[ -f /etc/bashrc ]]; then . /etc/bashrc; fi
+[[ -f /etc/bashrc ]] && . /etc/bashrc
+[[ -f "$HOME/.bash_profile_env" ]] && . "$HOME/.bash_profile_env"
 
 # Function to resolve soft links
 function delink()
