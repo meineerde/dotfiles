@@ -34,5 +34,5 @@ rescue JSON::ParserError => err
   exit 1
 end
 
-colorize = !ARGV.include?('--no-color') && STDOUT.tty?
+colorize = ARGV.include?('--color')
 print_json(json, colorize)
