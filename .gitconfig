@@ -7,8 +7,8 @@
 	ci = commit
 	cm = commit
 	p = push
-	pf = push --force
-	fp = push --force
+	pf = push --force-with-lease
+	fp = push --force-with-lease
 	su = submodule update --recursive --init
 	addnw = !sh -c 'git diff -w --no-color "$@" | git apply --cached --ignore-whitespace' -
 [user]
