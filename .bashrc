@@ -135,6 +135,11 @@ case `uname` in
   *) echo "OS unknown to bashrc." ;;
 esac
 
+# Rust
+if [[ -d "$HOME/.cargo/bin" ]]; then
+  export PATH="$HOME/.cargo/bin:$PATH"
+fi
+
 # Load RVM
 if [[ -s $HOME/.rvm/scripts/rvm ]]; then
   source $HOME/.rvm/scripts/rvm
