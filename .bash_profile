@@ -1,4 +1,2 @@
-# include .bashrc if it exists
-if [ -f ~/.bashrc ]; then
-  . ~/.bashrc
-fi
+[ -f ~/.bashrc ] && . ~/.bashrc
+[ -f ~/.profile ] && . ~/.profile
