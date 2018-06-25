@@ -44,7 +44,9 @@ export HISTFILESIZE=""
 shopt -s histappend >/dev/null 2>&1
 
 # NVM
-[[ -s $HOME/.nvm/nvm.sh ]] && source $HOME/.nvm/nvm.sh
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 # SSH specific config.
 if [[ -n "$SSH_CLIENT" ]]; then
