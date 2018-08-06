@@ -78,7 +78,11 @@ case `uname` in
     export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home"
 
     export EDITOR="vim"
-    export BACKGROUND_EDITOR="subl -n"
+    if type atom >/dev/null 2>&1; then
+      export BACKGROUND_EDITOR="atom"
+    else
+      export BACKGROUND_EDITOR="subl -n"
+    fi
     export SVN_EDITOR="$EDITOR"
 
     alias ls='ls -G'
