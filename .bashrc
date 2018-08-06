@@ -177,7 +177,16 @@ ps1_host='\h'
 
 . $HOME/bin/bash_vcs.sh
 ps1_vcs='$(__prompt_command)'
-ps1_ruby=' \[\e[0;34m\]$(rvm-prompt v g)\[\e[00m\]'
+if type rvm-prompt >/dev/null 2>&1; then
+  ps1_ruby=' \[\e[0;34m\]$(rvm-prompt v g)\[\e[00m\]'
+elif [[ -n "$RUBY_VERSION" ]]; then
+  ps1_ruby=' \[\e[0;34m\]$RUBY_VERSION\[\e[00m\]'
+elif type ruby >/dev/null 2>&1; then
+  ps1_ruby=' \[\e[0;34m\]$(ruby -e "puts RUBY_VERSION")\[\e[00m\]'
+else
+  ps1_ruby=''
+fi
+
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
