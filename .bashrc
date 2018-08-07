@@ -16,7 +16,7 @@ function delink()
 }
 
 # General Settings
-export DOTFILES=$(dirname `delink ~/.bashrc` )
+export DOTFILES="$(dirname `delink ~/.bashrc` )"
 export PATH="/usr/local/sbin:/usr/local/bin:/opt/local/bin:/Developer/usr/bin:/usr/sbin:/usr/bin:$PATH:/opt/bin:/opt/local/bin"
 export PATH="$HOME/bin:$DOTFILES/bin:$PATH"
 export PWD_LENGTH=50
@@ -33,7 +33,7 @@ bind Space:magic-space
 
 BASE16_SCHEME="tomorrow"
 BASE16_SHELL="$DOTFILES/base16-shell/base16-$BASE16_SCHEME.dark.sh"
-[[ -s $BASE16_SHELL ]] && . $BASE16_SHELL
+[[ -s "$BASE16_SHELL" ]] && . "$BASE16_SHELL"
 
 # Bash History
 export HISTIGNORE="&:ls:ll:la:l.:pwd:exit:clear"
@@ -43,10 +43,13 @@ export HISTSIZE=1000
 export HISTFILESIZE=""
 shopt -s histappend >/dev/null 2>&1
 
-# NVM
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+export EDITOR="vim"
+if type atom >/dev/null 2>&1; then
+  export BACKGROUND_EDITOR="atom"
+else
+  export BACKGROUND_EDITOR="subl -n"
+fi
+export SVN_EDITOR="$EDITOR"
 
 # SSH specific config.
 if [[ -n "$SSH_CLIENT" ]]; then
@@ -54,37 +57,16 @@ if [[ -n "$SSH_CLIENT" ]]; then
   ps1_host="\[\e[01;32m\]\h"
 fi
 
-USER_NAME="Holger Just"
-USER_EMAIL="web@meine-er.de"
-
 # Only if we are in an interactive session
 if [[ $- =~ 'i' ]]; then
   # Disable XON/XOFF flow control (^s/^q).
   stty -ixon
 fi
 
-if [[ -d "$DOTFILES/bash_completion.d" ]]; then
-  for i in $DOTFILES/bash_completion.d/*; do
-    if [[ -r "$i" ]]; then
-      . "$i"
-    fi
-  done
-  unset i
-fi
 
 # OS specific config.
 case `uname` in
   Darwin)
-    export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home"
-
-    export EDITOR="vim"
-    if type atom >/dev/null 2>&1; then
-      export BACKGROUND_EDITOR="atom"
-    else
-      export BACKGROUND_EDITOR="subl -n"
-    fi
-    export SVN_EDITOR="$EDITOR"
-
     alias ls='ls -G'
 
     export PG_DATA=/usr/local/var/postgres
@@ -92,11 +74,6 @@ case `uname` in
     gitx() { open -a GitX $@; }
     alias gx=gitx
     pdfman() { man -t $1 | open -a /Applications/Skim.app -f; }
-
-    # Bash completion
-    if [[ -f "$(brew --prefix)/etc/bash_completion" ]]; then
-      . "$(brew --prefix)/etc/bash_completion"
-    fi
 
     # Set the JAVA_HOME environment variable to the correct versob
     jhome() {
@@ -109,6 +86,10 @@ case `uname` in
       java -version
     }
 
+    # Bash completion
+    if [[ -f "$(brew --prefix)/etc/bash_completion" ]]; then
+      . "$(brew --prefix)/etc/bash_completion"
+    fi
     ;;
   Linux)
     PATH=$PATH:/var/lib/gems/1.8/bin:/var/lib/gems/1.9/bin
@@ -119,34 +100,33 @@ case `uname` in
         . /etc/bash_completion
     fi
     ;;
-  SunOS)
-    stty istrip
-    export PATH=/opt/csw/bin:/opt/sfw/bin:$PATH:/etc
-
-    if [[ -f /etc/bash_completion ]]; then
-        . /etc/bash_completion
-    fi
-
-    # home key
-    bind '"\e[1~":beginning-of-line'
-    # del key
-    bind '"\e[3~":delete-char'
-    # end key
-    bind '"\e[4~":end-of-line'
-    # pgup key
-    bind '"\e[5~":history-search-forward'
-    # pgdn key
-    bind '"\e[6~":history-search-backward'
-    ;;
-  *) echo "OS unknown to bashrc." ;;
 esac
+
+# Enable programmable completion features.
+if [[ -d "$DOTFILES/bash_completion.d" ]]; then
+  for i in $DOTFILES/bash_completion.d/*; do
+    if [[ -r "$i" ]]; then
+      . "$i"
+    fi
+  done
+  unset i
+fi
+if [[ -f /etc/bash_completion ]]; then . /etc/bash_completion; fi
+if [[ -f ~/.tabtab.bash ]]; then . ~/.tabtab.bash; fi
+set show-all-if-ambiguous on
 
 # Rust
 if [[ -d "$HOME/.cargo/bin" ]]; then
   export PATH="$HOME/.cargo/bin:$PATH"
 fi
 
-# Load RVM
+# chruby
+if [[ -f /usr/local/share/chruby/chruby.sh ]]; then
+  source /usr/local/share/chruby/chruby.sh
+  source /usr/local/opt/chruby/share/chruby/auto.sh
+fi
+
+# RVM
 if [[ -s $HOME/.rvm/scripts/rvm ]]; then
   source $HOME/.rvm/scripts/rvm
   # tab completion for RVM
@@ -154,15 +134,19 @@ if [[ -s $HOME/.rvm/scripts/rvm ]]; then
   PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 fi
 
-# Load chruby
-if [[ -f /usr/local/share/chruby/chruby.sh ]]; then
-  source /usr/local/share/chruby/chruby.sh
-  source /usr/local/opt/chruby/share/chruby/auto.sh
-fi
+# NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-# setting up editor if not yet done
-[[ -z "$EDITOR" ]] && EDITOR="nano"
-[[ -z "$SVN_EDITOR" ]] && SVN_EDITOR="$EDITOR"
+
+export EDITOR="vim"
+if type atom >/dev/null 2>&1; then
+  export BACKGROUND_EDITOR="atom"
+else
+  export BACKGROUND_EDITOR="subl -n"
+fi
+export SVN_EDITOR="$EDITOR"
 
 # Appliction config
 export PLANIO_SKIP_AMA=1
@@ -215,7 +199,6 @@ if [[ -n "$ps1_user" ]] && [[ -n "$ps1_host" ]]; then ps1_user="$ps1_user@"; fi
 PS1="$ps1_user$ps1_host"
 if [[ "$PS1" != "" ]]; then PS1="$PS1\[\e[00m\]:"; fi
 export PS1="$PS1$ps1_pwd$ps1_vcs$ps1_ruby \$ "
-
 
 # Make less more friendly for non-text input files, see lesspipe(1)
 [[ -x /usr/bin/lesspipe ]] && eval "$(lesspipe)"
@@ -320,11 +303,6 @@ c() { with_project "$1" cd; }
 
 # open project in editor
 e() { with_project "${1:-.}" "$BACKGROUND_EDITOR"; }
-
-# Enable programmable completion features.
-if [[ -f /etc/bash_completion ]]; then . /etc/bash_completion; fi
-if [[ -f ~/.tabtab.bash ]]; then . ~/.tabtab.bash; fi
-set show-all-if-ambiguous on
 
 # bash completion with with_project and functions using it
 _with_project() {
