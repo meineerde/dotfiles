@@ -135,15 +135,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-
-export EDITOR="vim"
-if type atom >/dev/null 2>&1; then
-  export BACKGROUND_EDITOR="atom"
-else
-  export BACKGROUND_EDITOR="subl -n"
-fi
-export SVN_EDITOR="$EDITOR"
-
 # Appliction config
 export PLANIO_SKIP_AMA=1
 
