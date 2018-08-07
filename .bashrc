@@ -39,10 +39,11 @@ export HISTSIZE=1000
 export HISTFILESIZE=""
 shopt -s histappend >/dev/null 2>&1
 
-export EDITOR="vim"
 if type atom >/dev/null 2>&1; then
-  export BACKGROUND_EDITOR="atom"
+  export BACKGROUND_EDITOR="atom -n"
+  export EDITOR="atom -nw"
 else
+  export EDITOR="vim"
   export BACKGROUND_EDITOR="subl -n"
 fi
 export SVN_EDITOR="$EDITOR"
