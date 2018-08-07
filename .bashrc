@@ -31,10 +31,6 @@ shopt -u mailwarn >/dev/null 2>&1
 shopt -s no_empty_cmd_completion >/dev/null 2>&1
 bind Space:magic-space
 
-BASE16_SCHEME="tomorrow"
-BASE16_SHELL="$DOTFILES/base16-shell/base16-$BASE16_SCHEME.dark.sh"
-[[ -s "$BASE16_SHELL" ]] && . "$BASE16_SHELL"
-
 # Bash History
 export HISTIGNORE="&:ls:ll:la:l.:pwd:exit:clear"
 export HISTCONTROL=ignoreboth
