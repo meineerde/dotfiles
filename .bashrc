@@ -311,6 +311,7 @@ with_project() {
     $2 "$target"
   else
     echo "unknown project"
+    return 1
   fi
 }
 
