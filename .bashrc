@@ -20,6 +20,11 @@ export DOTFILES="$(dirname `delink ~/.bashrc` )"
 export PATH="/usr/local/sbin:/usr/local/bin:/opt/local/bin:/Developer/usr/bin:/usr/sbin:/usr/bin:$PATH:/opt/bin:/opt/local/bin"
 export PATH="$HOME/bin:$DOTFILES/bin:$PATH"
 export PWD_LENGTH=50
+
+# Set locale to en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
 set -o notify
 shopt -s cdspell >/dev/null 2>&1
 shopt -s checkwinsize >/dev/null 2>&1
