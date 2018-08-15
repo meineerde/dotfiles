@@ -323,6 +323,3 @@ if shopt -q cdable_vars; then
 else
   complete -F _with_project -o nospace c e with_project
 fi
-
-# Clean up.
-unset ps1_user ps1_host ps1_vcs ps_ruby ps1_pwd ps1_ruby script this dir bin
