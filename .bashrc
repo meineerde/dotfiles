@@ -199,16 +199,7 @@ __prompt_short_pwd() {
   fi
 }
 ps1_pwd='$(__prompt_short_pwd)'
-
-__prompt_exit_code() {
-  # Show last commands exit-code by smiley
-  if [ $? = 0 ]; then
-    echo -e '\e[1;32m+\e[00m'
-  else
-    echo -e '\e[1;31m-\e[00m'
-  fi
-}
-ps1_exit_code='\[$(__prompt_exit_code)\] '
+ps1_exit_code='\[$([[ $? -eq 0 ]] && echo -e "\e[1;32m\]+" || echo -e "\e[1;31m\]-")\[\e[00m\] '
 
 # Building $PS1.
 if [[ -n "$ps1_user" ]] && [[ -n "$ps1_host" ]]; then ps1_user="$ps1_user@"; fi
