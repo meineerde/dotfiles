@@ -185,7 +185,7 @@ fi
 PS1="${debian_chroot:+($debian_chroot)}"
 
 # Short PWD, if it's to long.
-short_pwd() {
+__prompt_short_pwd() {
   local FIXED_PWD=${PWD#$HOME}
   if [ ${#FIXED_PWD} -le ${#PWD} ]; then
     FIXED_PWD="~${FIXED_PWD}"
@@ -198,12 +198,21 @@ short_pwd() {
     echo "$FIXED_PWD"
   fi
 }
-ps1_pwd='$(short_pwd)'
-#ps1_pwd='\[\e[1;30m\]\W\[\e[00m\]'
+ps1_pwd='$(__prompt_short_pwd)'
+
+__prompt_exit_code() {
+  # Show last commands exit-code by smiley
+  if [ $? = 0 ]; then
+    echo -e '\e[1;32m+\e[00m'
+  else
+    echo -e '\e[1;31m-\e[00m'
+  fi
+}
+ps1_exit_code='\[$(__prompt_exit_code)\] '
 
 # Building $PS1.
 if [[ -n "$ps1_user" ]] && [[ -n "$ps1_host" ]]; then ps1_user="$ps1_user@"; fi
-PS1="$ps1_user$ps1_host"
+PS1="$ps1_exit_code$ps1_user$ps1_host"
 if [[ "$PS1" != "" ]]; then PS1="$PS1\[\e[00m\]:"; fi
 export PS1="$PS1$ps1_pwd$ps1_vcs$ps1_ruby \$ "
 
