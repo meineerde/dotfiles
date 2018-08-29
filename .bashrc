@@ -73,7 +73,13 @@ case `uname` in
 
     export PG_DATA=/usr/local/var/postgres
 
-    gitx() { open -a GitX $@; }
+    gitx() {
+      if [ -x /usr/local/bin/gittower ]; then
+        /usr/local/bin/gittower $@
+      else
+        open -a GitX $@
+      fi
+    }
     alias gx=gitx
     pdfman() { man -t $1 | open -a /Applications/Skim.app -f; }
 
