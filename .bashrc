@@ -262,8 +262,8 @@ alias be="bundle exec"
 alias rs="rails server -b 127.0.0.1"
 alias rc="rails console"
 
-ss() { if [[ -x script/server ]]; then script/server -b 127.0.0.1 $@; else rs $@; fi }
-sc() { if [[ -x script/console ]]; then script/console $@; else rc $@; fi }
+ss() { if [[ -x script/server ]]; then script/server "${1:-webrick}" -b 127.0.0.1 "${@:2}"; else rs $@; fi }
+sc() { if [[ -x script/console ]]; then script/console "$@"; else rc "$@"; fi }
 http() {
   port=${1:-8000}
   python -m SimpleHTTPServer $port
