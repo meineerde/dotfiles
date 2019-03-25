@@ -171,7 +171,13 @@ __prompt_ruby_version() {
     return $?
   fi
 
-  if [[ -n "$RUBY_ROOT" ]]; then
+  if type chruby_auto >/dev/null 2>&1; then
+    chruby_auto
+  fi
+
+  if [[ -n "$RUBY_VERSION" ]]; then
+    local ruby_version="$RUBY_VERSION"
+  elif [[ -n "$RUBY_ROOT" ]]; then
     local ruby_version="$(basename "$RUBY_ROOT")"
   elif type ruby > /dev/null 2>&1; then
     local ruby_version="$(ruby -e "puts defined?(RUBY_ENGINE_VERSION) ? \"#{RUBY_ENGINE}-#{RUBY_ENGINE_VERSION}\" : \"ruby-#{RUBY_VERSION}\"")"
