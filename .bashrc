@@ -132,6 +132,8 @@ fi
 if [[ -f /usr/local/share/chruby/chruby.sh ]]; then
   source /usr/local/share/chruby/chruby.sh
   source /usr/local/opt/chruby/share/chruby/auto.sh
+
+  alias cr=chruby
 fi
 
 # RVM
