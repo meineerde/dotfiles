@@ -273,11 +273,11 @@ alias ga='git add -p'
 ghead() { git rev-parse --verify "${1:-HEAD}"; }
 
 alias be="bundle exec"
-alias rs="rails server -b 127.0.0.1"
-alias rc="rails console"
+alias rs="bundle exec rails server -b 127.0.0.1"
+alias rc="bundle exec rails console"
 
-ss() { if [[ -x script/server ]]; then script/server "${1:-webrick}" -b 127.0.0.1 "${@:2}"; else rs $@; fi }
-sc() { if [[ -x script/console ]]; then script/console "$@"; else rc "$@"; fi }
+ss() { if [[ -x script/server ]]; then bundle exec script/server webrick -b 127.0.0.1 "$@"; else rs $@; fi }
+sc() { if [[ -x script/console ]]; then bundle exec script/console "$@"; else rc "$@"; fi }
 http() {
   port=${1:-8000}
   python -m SimpleHTTPServer $port
