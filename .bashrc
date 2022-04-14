@@ -279,8 +279,12 @@ alias rc="bundle exec rails console"
 ss() { if [[ -x script/server ]]; then bundle exec script/server webrick -b 127.0.0.1 "$@"; else rs $@; fi }
 sc() { if [[ -x script/console ]]; then bundle exec script/console "$@"; else rc "$@"; fi }
 http() {
-  port=${1:-8000}
-  python -m SimpleHTTPServer $port
+  port="${1:-8000}"
+  if type python3 >/dev/null 2>&1; then
+    python3 -m http.server "$port"
+  else
+    python -m SimpleHTTPServer "$port"
+  fi
 }
 
 # if cat is called on a directory, call ls instead
