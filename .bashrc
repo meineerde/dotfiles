@@ -256,6 +256,8 @@ alias use='rvm use'
 alias gems='gem list | less'
 alias less='less -R'
 
+alias ssh-insecure='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
