@@ -161,7 +161,10 @@ export PYENV_ROOT="$HOME/.pyenv"
 if ! command -v pyenv 1>/dev/null 2>&1 && [[ -d "$PYENV_ROOT/bin" ]]; then
   export PATH="$PYENV_ROOT/bin:$PATH"
 fi
-command -v pyenv 1>/dev/null 2>&1 && eval "$(pyenv init -)"
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+  eval "$(pyenv init --path)"
+fi
 
 # Appliction config
 export PLANIO_SKIP_AMA=1
