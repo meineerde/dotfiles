@@ -260,6 +260,7 @@ alias gems='gem list | less'
 alias less='less -R'
 
 alias ssh-insecure='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+complete -o default -o nospace -F _ssh ssh-insecure
 
 alias ..="cd .."
 alias ...="cd ../.."
