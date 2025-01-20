@@ -15,9 +15,8 @@ function delink()
 }
 
 # General Settings
-export DOTFILES="$(dirname `delink ~/.bashrc` )"
-export PATH="/usr/local/sbin:/usr/local/bin:/opt/local/bin:/Developer/usr/bin:/usr/sbin:/usr/bin:$PATH:/opt/bin:/opt/local/bin"
-export PATH="$HOME/bin:$DOTFILES/bin:$PATH"
+export DOTFILES="$(dirname "$(delink ~/.bashrc)")"
+export PATH="${DOTFILES}/bin:${PATH}"
 export PWD_LENGTH=50
 
 # Set locale to en_US.UTF-8
@@ -75,7 +74,7 @@ if [[ $- =~ 'i' ]]; then
 fi
 
 # OS specific config.
-case `uname` in
+case "$(uname)" in
   Darwin)
     # Homebrew
     [[ -x /usr/local/bin/brew ]] && eval "$(/usr/local/bin/brew shellenv)"
@@ -85,16 +84,10 @@ case `uname` in
     if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
       source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
     fi
-
-    alias ls='ls -G'
     ;;
-  Linux)
-    alias ls='ls --color=auto'
-  ;;
 esac
 
-if [[ -f /etc/bash_completion ]]; then . /etc/bash_completion; fi
-if [[ -f ~/.tabtab.bash ]]; then . ~/.tabtab.bash; fi
+if [[ -r /etc/bash_completion ]]; then . /etc/bash_completion; fi
 set show-all-if-ambiguous on
 
 # Rust
@@ -109,26 +102,39 @@ export PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_
 export PERL_MB_OPT="--install_base \"$HOME/perl5\""
 export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
 
-# chruby
-if [[ -f /usr/local/share/chruby/chruby.sh ]]; then
-  source /usr/local/share/chruby/chruby.sh
-  source /usr/local/opt/chruby/share/chruby/auto.sh
-
-  alias cr=chruby
+# Ruby
+if [[ -r "${HOME}/workspace/chruby/share/chruby/chruby.sh" ]]; then
+  chruby_prefix="${HOME}/workspace/chruby"
+  PATH="${chruby_prefix}/bin:${PATH}"
+elif [[ -r "${HOMEBREW_PREFIX}/share/chruby/chruby.sh" ]]; then
+  chruby_prefix="${HOMEBREW_PREFIX}"
 fi
+if [[ -n "${chruby_prefix:-}" ]]; then
+  source "${chruby_prefix}/share/chruby/chruby.sh"
+  source "${chruby_prefix}/share/chruby/auto.sh"
 
-# RVM
-if [[ -s $HOME/.rvm/scripts/rvm ]]; then
+  unset chruby_prefix
+  alias cr=chruby
+elif [[ -s $HOME/.rvm/scripts/rvm ]]; then
   source $HOME/.rvm/scripts/rvm
   # tab completion for RVM
   [[ -r $rvm_path/scripts/completion ]] && . $rvm_path/scripts/completion
   PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 fi
 
+alias be="bundle exec"
+alias rs="bundle exec rails server -b 127.0.0.1"
+alias rc="bundle exec rails console"
+
+ss() { if [[ -x script/server ]]; then bundle exec script/server webrick -b 127.0.0.1 "$@"; else rs $@; fi }
+sc() { if [[ -x script/console ]]; then bundle exec script/console "$@"; else rc "$@"; fi }
+
 # NVM
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+if [[ -d "${HOME}/.nvm" ]]; then
+  export NVM_DIR="${HOME}/.nvm"
+  [ -s "${NVM_DIR}/nvm.sh" ] && \. "${NVM_DIR}/nvm.sh" --no-use
+  [ -s "${NVM_DIR}/bash_completion" ] && \. "${NVM_DIR}/bash_completion"
+fi
 
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
@@ -140,32 +146,7 @@ if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init --path)"
 fi
 
-# Appliction config
-export PLANIO_SKIP_AMA=1
-
-
-# Make less more friendly for non-text input files, see lesspipe(1)
-[[ -x /usr/bin/lesspipe ]] && eval "$(lesspipe)"
-
-# Enable color support. Don't add ls here, it behaves different on Darwin/BSD.
-if [[ -x /usr/bin/dircolors ]]; then eval "$(dircolors -b)"; fi
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
-
-# Some more aliases.
-alias ll='ls -Alh'
-alias screen='screen -U'
-alias less='less -R'
-
-alias ssh-insecure='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
-complete -o default -o nospace -F _ssh ssh-insecure
-
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
-
+# Git
 alias g=git
 __git_complete g __git_main
 alias got='git'
@@ -174,6 +155,8 @@ alias goit='git'
 __git_complete goit __git_main
 alias gdiff='git diff'
 __git_complete gdiff _git_diff
+# alias d='git diff'
+# __git_complete d _git_diff
 alias st='git status'
 __git_complete gdiff _git_status
 alias log='git lg'
@@ -185,12 +168,29 @@ __git_complete ga _git_add
 
 ghead() { git rev-parse --verify "${1:-HEAD}"; }
 
-alias be="bundle exec"
-alias rs="bundle exec rails server -b 127.0.0.1"
-alias rc="bundle exec rails console"
+# Planio
+export PLANIO_SKIP_AMA=1
 
-ss() { if [[ -x script/server ]]; then bundle exec script/server webrick -b 127.0.0.1 "$@"; else rs $@; fi }
-sc() { if [[ -x script/console ]]; then bundle exec script/console "$@"; else rc "$@"; fi }
+# Enable color support
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias ls='ls --color=auto'
+
+# Some more aliases.
+alias ll='ls --color=auto -Alh'
+alias screen='screen -U'
+alias less='less -R'
+
+alias ssh-insecure='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+complete -o default -o nospace -F _ssh ssh-insecure
+
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+
+# Some useful helper functions
 http() {
   port="${1:-8000}"
   if type python3 >/dev/null 2>&1; then
@@ -209,13 +209,9 @@ cat() {
   fi
 }
 
-mc() {
-  mkdir "$@" && cd "$@"
-}
-
 # directory for project
 project_dirs() {
-  local dirs="__path__:$HOME/workspace/__path__:$HOME/__path__:/Volumes/Finn/__path__:$GEM_HOME/gems/__gempath__:$GEM_HOME/gems/__path__:$GEM_HOME/bundler/gems/__gempath__:$GEM_HOME/bundler/gems/__path__"
+  local dirs="__path__:$HOME/workspace/__path__:$HOME/__path__:$GEM_HOME/gems/__gempath__:$GEM_HOME/gems/__path__:$GEM_HOME/bundler/gems/__gempath__:$GEM_HOME/bundler/gems/__path__"
   if [[ -n "$1" ]]; then
     dirs="${dirs//__gempath__/__path__-*}"
     echo  ${dirs//__path__/$1}
