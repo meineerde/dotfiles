@@ -43,6 +43,11 @@ export HISTSIZE=1000
 export HISTFILESIZE=""
 shopt -s histappend >/dev/null 2>&1
 
+# Base16 Shell Theme
+base16_theme="${DOTFILES}/base16-shell/scripts/base16-tomorrow-night.sh"
+source "$base16_theme"
+alias reset="command reset && source \"${base16_theme}\""
+
 if type atom >/dev/null 2>&1; then
   export BACKGROUND_EDITOR="atom -n"
   export EDITOR="atom -nw"
