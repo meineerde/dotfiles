@@ -223,14 +223,7 @@ alias egrep='egrep --color=auto'
 
 # Some more aliases.
 alias ll='ls -Alh'
-alias la='ls -A'
-alias l='ls -CF'
-alias l.="ls -d .*"
-alias pdflatex='pdflatex -shell-escape'
-alias vi='vim'
 alias screen='screen -U'
-alias use='rvm use'
-alias gems='gem list | less'
 alias less='less -R'
 
 alias ssh-insecure='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
