@@ -307,9 +307,10 @@ d() {
 
 # do stuff with project
 with_project() {
-  local target=$(d "$1")
-  if [[ $target ]]; then
-    echo -e "\033[0;34m$2 $target\033[00m"
+  local target="$1"
+  [[ -e "$1" ]] || target="$(d "$1")"
+  if [[ -e $target ]]; then
+    echo -e "\033[0;34m${2} ${target}\033[00m"
     $2 "$target"
   else
     echo "unknown project"
@@ -321,7 +322,7 @@ with_project() {
 c() { with_project "$1" cd; }
 
 # open project in editor
-e() { with_project "${1:-.}" "$BACKGROUND_EDITOR"; }
+e() { with_project "${1:-.}" "${BACKGROUND_EDITOR} --"; }
 
 # bash completion with with_project and functions using it
 _with_project() {
