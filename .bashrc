@@ -74,12 +74,9 @@ if [[ $- =~ 'i' ]]; then
   stty -ixon
 fi
 
-
 # OS specific config.
 case `uname` in
   Darwin)
-    alias ls='ls -G'
-
     export PG_DATA=/usr/local/var/postgres
 
     gitx() {
@@ -102,6 +99,10 @@ case `uname` in
       echo "JAVA_HOME:" "$JAVA_HOME"
       java -version
     }
+
+    # Homebrew
+    [[ -x /usr/local/bin/brew ]] && eval "$(/usr/local/bin/brew shellenv)"
+    [[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
 
     # Bash completion
     if [[ -f "$(brew --prefix)/etc/bash_completion" ]]; then
