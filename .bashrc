@@ -242,16 +242,22 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
 alias g=git
-complete -o default -o nospace -F _git g
+__git_complete g __git_main
 alias got='git'
+__git_complete got __git_main
 alias goit='git'
-alias gsvn='git svn'
+__git_complete goit __git_main
 alias gdiff='git diff'
-alias st='git st'
+__git_complete gdiff _git_diff
+alias st='git status'
+__git_complete gdiff _git_status
 alias log='git lg'
-alias ciam='git ci -am'
-alias cia='git ci -a'
+__git_complete log _git_log
+alias cm='git commit -m'
+__git_complete cm _git_commit
 alias ga='git add -p'
+__git_complete ga _git_add
+
 ghead() { git rev-parse --verify "${1:-HEAD}"; }
 
 alias be="bundle exec"
