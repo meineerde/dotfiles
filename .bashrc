@@ -77,29 +77,6 @@ fi
 # OS specific config.
 case `uname` in
   Darwin)
-    export PG_DATA=/usr/local/var/postgres
-
-    gitx() {
-      if [ -x /usr/local/bin/gittower ]; then
-        /usr/local/bin/gittower $@
-      else
-        open -a GitX $@
-      fi
-    }
-    alias gx=gitx
-    pdfman() { man -t $1 | open -a /Applications/Skim.app -f; }
-
-    # Set the JAVA_HOME environment variable to the correct versob
-    jhome() {
-      if [ "$#" -ge 1 ]; then
-        export JAVA_HOME="$(/usr/libexec/java_home -v "$@")"
-      else
-        export JAVA_HOME="$(/usr/libexec/java_home)"
-      fi
-      echo "JAVA_HOME:" "$JAVA_HOME"
-      java -version
-    }
-
     # Homebrew
     [[ -x /usr/local/bin/brew ]] && eval "$(/usr/local/bin/brew shellenv)"
     [[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -108,9 +85,10 @@ case `uname` in
     if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
       source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
     fi
+
+    alias ls='ls -G'
     ;;
   Linux)
-    PATH=$PATH:/var/lib/gems/1.8/bin:/var/lib/gems/1.9/bin
     alias ls='ls --color=auto'
   ;;
 esac
