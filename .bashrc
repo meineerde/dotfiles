@@ -143,74 +143,6 @@ fi
 # Appliction config
 export PLANIO_SKIP_AMA=1
 
-# Don't show user name if it's me. make root red.
-case $USER in
-  hjust) ;;
-  *)
-    case $UID in
-      0) ps1_user="\[\e[01;31m\]\u" ;;
-      *) ps1_user="\[\e[01;32m\]\u" ;;
-    esac
-esac
-
-ps1_host='\h'
-
-. $HOME/bin/bash_vcs.sh
-ps1_vcs='$(__prompt_command)'
-
-__prompt_ruby_version() {
-  if type rvm-prompt >/dev/null 2>&1; then
-    rvm-prompt v g
-    return $?
-  fi
-
-  if type chruby_auto >/dev/null 2>&1; then
-    chruby_auto
-  fi
-
-  if [[ -n "$RUBY_VERSION" ]]; then
-    local ruby_version="$RUBY_VERSION"
-  elif [[ -n "$RUBY_ROOT" ]]; then
-    local ruby_version="$(basename "$RUBY_ROOT")"
-  elif type ruby > /dev/null 2>&1; then
-    local ruby_version="$(ruby --disable-gems -e "puts defined?(RUBY_ENGINE_VERSION) ? \"#{RUBY_ENGINE}-#{RUBY_ENGINE_VERSION}\" : \"ruby-#{RUBY_VERSION}\"")"
-  else
-    local ruby_version=''
-  fi
-
-  ruby_version="${ruby_version#ruby-}"
-  echo "$ruby_version"
-}
-ps1_ruby=' \[\e[0;34m\]$(__prompt_ruby_version)\[\e[00m\]'
-
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
-PS1="${debian_chroot:+($debian_chroot)}"
-
-# Short PWD, if it's to long.
-__prompt_short_pwd() {
-  local FIXED_PWD=${PWD#$HOME}
-  if [ ${#FIXED_PWD} -le ${#PWD} ]; then
-    FIXED_PWD="~${FIXED_PWD}"
-  else
-    FIXED_PWD="${PWD}"
-  fi
-  if [[ ${#FIXED_PWD} -gt $PWD_LENGTH ]]; then
-    echo "${FIXED_PWD:0:$((4))}...${FIXED_PWD:$((${#PWD}-$PWD_LENGTH+7)):$(($PWD_LENGTH-7))}"
-  else
-    echo "$FIXED_PWD"
-  fi
-}
-ps1_pwd='$(__prompt_short_pwd)'
-ps1_exit_code='\[$([[ $? -eq 0 ]] && echo -e "\e[1;32m\]+" || echo -e "\e[1;31m\]-")\[\e[00m\] '
-
-# Building $PS1.
-if [[ -n "$ps1_user" ]] && [[ -n "$ps1_host" ]]; then ps1_user="$ps1_user@"; fi
-PS1="$ps1_exit_code$ps1_user$ps1_host"
-if [[ "$PS1" != "" ]]; then PS1="$PS1\[\e[00m\]:"; fi
-export PS1="$PS1$ps1_pwd$ps1_vcs$ps1_ruby \$ "
 
 # Make less more friendly for non-text input files, see lesspipe(1)
 [[ -x /usr/bin/lesspipe ]] && eval "$(lesspipe)"
@@ -335,3 +267,97 @@ if shopt -q cdable_vars; then
 else
   complete -F _with_project -o nospace c e with_project
 fi
+
+###############################################################################
+# SETUP PS1
+
+# Don't show user name if it's me. make root red.
+case $USER in
+  hjust) ;;
+  *)
+    case $UID in
+      0) ps1_user="\[\e[01;31m\]\u" ;;
+      *) ps1_user="\[\e[01;32m\]\u" ;;
+    esac
+esac
+
+ps1_host='\h'
+
+__prompt_vcs() {
+  if [[ -z $NOPROMPT ]]; then
+    local vcs base_dir ref base_dir
+
+    git_dir() {
+      ref=$(echo -e "$(__git_ps1  "(%s)")")
+      if [ -z "$ref" ]; then return 1; fi
+      vcs="git"
+    }
+
+    svn_dir() {
+      [ -d ".svn" ] || return 1
+      ref=$(svn info | awk '/^URL/ { sub(".*/","",$0); r=$0 } /^Revision/ { sub("[^0-9]*","",$0); print $0 }')
+      ref="[$ref]"
+      vcs="svn"
+    }
+
+    git_dir || svn_dir
+
+    if [ -n "$vcs" ]; then
+      alias st="$vcs status"
+      alias d="$vcs diff"
+
+      __vcs_ref="$ref"
+      echo " $__vcs_ref"
+    fi
+  fi
+}
+ps1_vcs='$(__prompt_vcs)'
+
+__prompt_ruby_version() {
+  local ruby_version
+  if type rvm-prompt >/dev/null 2>&1; then
+    rvm-prompt v g
+    return $?
+  fi
+
+  if type chruby_auto >/dev/null 2>&1; then
+    chruby_auto
+  fi
+
+  if [[ -n "$RUBY_VERSION" ]]; then
+    ruby_version="$RUBY_VERSION"
+  elif [[ -n "$RUBY_ROOT" ]]; then
+    ruby_version="$(basename "$RUBY_ROOT")"
+  elif type ruby > /dev/null 2>&1; then
+    ruby_version="$(ruby --disable-gems -e "puts defined?(RUBY_ENGINE_VERSION) ? \"#{RUBY_ENGINE}-#{RUBY_ENGINE_VERSION}\" : \"ruby-#{RUBY_VERSION}\"")"
+  else
+    ruby_version=''
+  fi
+
+  ruby_version="${ruby_version#ruby-}"
+  echo "$ruby_version"
+}
+ps1_ruby=' \[\e[0;34m\]$(__prompt_ruby_version)\[\e[00m\]'
+
+# Short PWD, if it's to long.
+__prompt_short_pwd() {
+  local FIXED_PWD=${PWD#$HOME}
+  if [ ${#FIXED_PWD} -le ${#PWD} ]; then
+    FIXED_PWD="~${FIXED_PWD}"
+  else
+    FIXED_PWD="${PWD}"
+  fi
+  if [[ ${#FIXED_PWD} -gt $PWD_LENGTH ]]; then
+    echo "${FIXED_PWD:0:$((4))}...${FIXED_PWD:$((${#PWD}-$PWD_LENGTH+7)):$(($PWD_LENGTH-7))}"
+  else
+    echo "$FIXED_PWD"
+  fi
+}
+ps1_pwd='$(__prompt_short_pwd)'
+ps1_exit_code='\[$([[ $? -eq 0 ]] && echo -e "\e[1;32m\]+" || echo -e "\e[1;31m\]-")\[\e[00m\] '
+
+# Building $PS1.
+if [[ -n "$ps1_user" ]] && [[ -n "$ps1_host" ]]; then ps1_user="$ps1_user@"; fi
+PS1="${ps1_exit_code}${ps1_user}${ps1_host}"
+[[ -n "$PS1" ]] && PS1="$PS1\[\e[00m\]:"
+export PS1="${PS1}${ps1_pwd}${ps1_vcs}${ps1_ruby} \$ "
