@@ -280,31 +280,20 @@ esac
 ps1_host='\h'
 
 __prompt_vcs() {
-  if [[ -z $NOPROMPT ]]; then
-    local vcs base_dir ref base_dir
-
-    git_dir() {
+  if [[ -z "$NOPROMPT" ]]; then
+    git_ref() {
       ref=$(echo -e "$(__git_ps1  "(%s)")")
       if [ -z "$ref" ]; then return 1; fi
-      vcs="git"
+      echo "$ref"
     }
 
-    svn_dir() {
+    svn_ref() {
       [ -d ".svn" ] || return 1
       ref=$(svn info | awk '/^URL/ { sub(".*/","",$0); r=$0 } /^Revision/ { sub("[^0-9]*","",$0); print $0 }')
-      ref="[$ref]"
-      vcs="svn"
+      echo "[$ref]"
     }
 
-    git_dir || svn_dir
-
-    if [ -n "$vcs" ]; then
-      alias st="$vcs status"
-      alias d="$vcs diff"
-
-      __vcs_ref="$ref"
-      echo " $__vcs_ref"
-    fi
+    git_ref || svn_ref
   fi
 }
 ps1_vcs='$(__prompt_vcs)'
