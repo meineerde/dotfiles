@@ -1,11 +1,19 @@
 require 'fileutils'
 
-desc "installs everything"
+task :update => "update:submodules"
+namespace :update do
+  desc "Update all submodules"
+  task :submodules do
+    sh "git submodule update --init"
+  end
+end
+
+desc "Install everything"
+task :install => "update"
 task :install => "install:all"
 namespace :install do
-
   def files(name, *files)
-    desc "installs #{name} configuration"
+    desc "Install #{name} configuration"
     task(name) do
       Dir[*files].collect do |file|
         full = File.join File.dirname(__FILE__), file.sub(/\.dotfile$/,'')
@@ -21,13 +29,6 @@ namespace :install do
 
   files :irb, ".irbrc", ".config/irb/*.rb"
   files :dot, *%w[.bash_profile .bashrc .gemrc .gitignore_global .gitconfig .ackrc .rvmrc.dotfile]
-  files :bin, "bin/*"
 
   files :vim, *%w[.vim .vimrc]
-  task :vim => [:dot, :bin, :submodules]
-
-  desc "Update all submodules"
-  task :submodules do
-    sh "git submodule update --init"
-  end
 end
