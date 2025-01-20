@@ -48,13 +48,18 @@ base16_theme="${DOTFILES}/base16-shell/scripts/base16-tomorrow-night.sh"
 source "$base16_theme"
 alias reset="command reset && source \"${base16_theme}\""
 
-if type atom >/dev/null 2>&1; then
-  export BACKGROUND_EDITOR="atom -n"
-  export EDITOR="atom -nw"
+# Editor
+if [[ -x /usr/local/bin/zed ]]; then
+  export EDITOR="/usr/local/bin/zed -w"
+  export BACKGROUND_EDITOR="/usr/local/bin/zed -n"
+elif [[ -x /usr/local/bin/atom ]]; then
+  export EDITOR="/usr/local/bin/atom -nw"
+  export BACKGROUND_EDITOR="/usr/local/bin/atom -n"
 else
-  export EDITOR="vim"
-  export BACKGROUND_EDITOR="subl -n"
+  export EDITOR="nano"
+  export BACKGROUND_EDITOR="$EDITOR"
 fi
+export GIT_EDITOR="$EDITOR"
 export SVN_EDITOR="$EDITOR"
 
 # SSH specific config.
