@@ -105,30 +105,16 @@ case `uname` in
     [[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
 
     # Bash completion
-    if [[ -f "$(brew --prefix)/etc/bash_completion" ]]; then
-      . "$(brew --prefix)/etc/bash_completion"
+    if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
+      source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
     fi
     ;;
   Linux)
     PATH=$PATH:/var/lib/gems/1.8/bin:/var/lib/gems/1.9/bin
     alias ls='ls --color=auto'
-
-    # enable bash completion in interactive shells
-    if [[ -f /etc/bash_completion ]]; then
-        . /etc/bash_completion
-    fi
-    ;;
+  ;;
 esac
 
-# Enable programmable completion features.
-if [[ -d "$DOTFILES/bash_completion.d" ]]; then
-  for i in $DOTFILES/bash_completion.d/*; do
-    if [[ -r "$i" ]]; then
-      . "$i"
-    fi
-  done
-  unset i
-fi
 if [[ -f /etc/bash_completion ]]; then . /etc/bash_completion; fi
 if [[ -f ~/.tabtab.bash ]]; then . ~/.tabtab.bash; fi
 set show-all-if-ambiguous on
