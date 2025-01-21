@@ -327,7 +327,7 @@ ps1_ruby=' \[\e[0;34m\]$(__prompt_ruby_version)\[\e[00m\]'
 # Short PWD, if it's to long.
 __prompt_short_pwd() {
   local FIXED_PWD=${PWD#$HOME}
-  if [ ${#FIXED_PWD} -le ${#PWD} ]; then
+  if [ ${#FIXED_PWD} -lt ${#PWD} ]; then
     FIXED_PWD="~${FIXED_PWD}"
   else
     FIXED_PWD="${PWD}"
