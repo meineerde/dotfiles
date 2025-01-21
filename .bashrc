@@ -3,15 +3,18 @@
 # Function to resolve soft links
 function delink()
 {
-  f=$1
+  local f="$1"
+  local ls link
   while [[ -h "$f" ]]; do
-    ls=`ls -ld "$f"`
-    link=`expr "$ls" : '.*-> \(.*\)$'`
-    if expr "$link" : '/.*' > /dev/null; then f="$link"
-    else f=`dirname "$f"`/"$link"
+    ls="$(ls -ld "$f")"
+    link="$(expr "$ls" : '.*-> \(.*\)$')"
+    if expr "$link" : '/.*' > /dev/null; then
+      f="$link"
+    else
+      f="$(dirname "$f")/${link}"
     fi
   done
-  echo $f
+  echo "$f"
 }
 
 # General Settings
