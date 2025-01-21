@@ -18,7 +18,8 @@ function delink()
 }
 
 # General Settings
-export DOTFILES="$(dirname "$(delink ~/.bashrc)")"
+DOTFILES="$(dirname "$(delink ~/.bashrc)")"
+export DOTFILES
 export PATH="${DOTFILES}/bin:${PATH}"
 export PWD_LENGTH=50
 
@@ -47,8 +48,8 @@ shopt -s histappend >/dev/null 2>&1
 
 # Base16 Shell Theme
 base16_theme="${DOTFILES}/base16-shell/scripts/base16-tomorrow-night.sh"
-source "$base16_theme"
-alias reset="command reset && source \"${base16_theme}\""
+. "$base16_theme"
+alias reset="command reset && . \"${base16_theme}\""
 
 # Editor
 if [[ -x /usr/local/bin/zed ]]; then
@@ -85,7 +86,7 @@ case "$(uname)" in
 
     # Bash completion
     if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
-      source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
+      . "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
     fi
     ;;
 esac
@@ -113,30 +114,30 @@ elif [[ -r "${HOMEBREW_PREFIX}/share/chruby/chruby.sh" ]]; then
   chruby_prefix="${HOMEBREW_PREFIX}"
 fi
 if [[ -n "${chruby_prefix:-}" ]]; then
-  source "${chruby_prefix}/share/chruby/chruby.sh"
-  source "${chruby_prefix}/share/chruby/auto.sh"
+  . "${chruby_prefix}/share/chruby/chruby.sh"
+  . "${chruby_prefix}/share/chruby/auto.sh"
 
   unset chruby_prefix
   alias cr=chruby
-elif [[ -s $HOME/.rvm/scripts/rvm ]]; then
-  source $HOME/.rvm/scripts/rvm
+elif [[ -s "${HOME}/.rvm/scripts/rvm" ]]; then
+  . "${HOME}/.rvm/scripts/rvm"
   # tab completion for RVM
-  [[ -r $rvm_path/scripts/completion ]] && . $rvm_path/scripts/completion
-  PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+  [[ -r "${rvm_path}/scripts/completion" ]] && . "${rvm_path}/scripts/completion"
+  PATH="${PATH}:${HOME}/.rvm/bin" # Add RVM to PATH for scripting
 fi
 
 alias be="bundle exec"
 alias rs="bundle exec rails server -b 127.0.0.1"
 alias rc="bundle exec rails console"
 
-ss() { if [[ -x script/server ]]; then bundle exec script/server webrick -b 127.0.0.1 "$@"; else rs $@; fi }
+ss() { if [[ -x script/server ]]; then bundle exec script/server webrick -b 127.0.0.1 "$@"; else rs "$@"; fi }
 sc() { if [[ -x script/console ]]; then bundle exec script/console "$@"; else rc "$@"; fi }
 
 # NVM
 if [[ -d "${HOME}/.nvm" ]]; then
   export NVM_DIR="${HOME}/.nvm"
-  [ -s "${NVM_DIR}/nvm.sh" ] && \. "${NVM_DIR}/nvm.sh" --no-use
-  [ -s "${NVM_DIR}/bash_completion" ] && \. "${NVM_DIR}/bash_completion"
+  [ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh" --no-use
+  [ -s "${NVM_DIR}/bash_completion" ] && . "${NVM_DIR}/bash_completion"
 fi
 
 # pyenv
@@ -217,20 +218,20 @@ project_dirs() {
   local dirs="__path__:$HOME/workspace/__path__:$HOME/__path__:$GEM_HOME/gems/__gempath__:$GEM_HOME/gems/__path__:$GEM_HOME/bundler/gems/__gempath__:$GEM_HOME/bundler/gems/__path__"
   if [[ -n "$1" ]]; then
     dirs="${dirs//__gempath__/__path__-*}"
-    echo  ${dirs//__path__/$1}
+    echo "${dirs//__path__/$1}"
   else
     dirs="${dirs//\/__gempath__/}"
-    echo  ${dirs//\/__path__/}
+    echo "${dirs//\/__path__/}"
   fi
 }
 
 d() {
-  local dirs="$(project_dirs "$1")"
+  local dirs; dirs="$(project_dirs "$1")"
   local IFS=$':'
   local dir
   for dir in $dirs; do
     if [[ -d "$dir" ]]; then
-      echo $dir
+      echo "$dir"
       break
     fi
   done
@@ -257,7 +258,7 @@ e() { with_project "${1:-.}" "${BACKGROUND_EDITOR} --"; }
 
 # bash completion with with_project and functions using it
 _with_project() {
-  local CDPATH="$(project_dirs):$CDPATH"
+  local CDPATH; CDPATH="$(project_dirs):{$CDPATH}"
   _cd
 }
 
@@ -329,14 +330,14 @@ ps1_ruby=' \[\e[0;34m\]$(__prompt_ruby_version)\[\e[00m\]'
 
 # Short PWD, if it's to long.
 __prompt_short_pwd() {
-  local FIXED_PWD=${PWD#$HOME}
-  if [ ${#FIXED_PWD} -lt ${#PWD} ]; then
+  local FIXED_PWD="${PWD#"$HOME"}"
+  if [ "${#FIXED_PWD}" -lt "${#PWD}" ]; then
     FIXED_PWD="~${FIXED_PWD}"
   else
-    FIXED_PWD="${PWD}"
+    FIXED_PWD="$PWD"
   fi
   if [[ ${#FIXED_PWD} -gt $PWD_LENGTH ]]; then
-    echo "${FIXED_PWD:0:$((4))}...${FIXED_PWD:$((${#PWD}-$PWD_LENGTH+7)):$(($PWD_LENGTH-7))}"
+    echo "${FIXED_PWD:0:$((4))}...${FIXED_PWD:$((${#PWD}-PWD_LENGTH+7)):$((PWD_LENGTH-7))}"
   else
     echo "$FIXED_PWD"
   fi
