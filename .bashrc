@@ -282,7 +282,7 @@ ps1_host='\h'
 __prompt_vcs() {
   if [[ -z "$NOPROMPT" ]]; then
     git_ref() {
-      ref=$(echo -e "$(__git_ps1  "(%s)")")
+      ref=$(echo -e "$(__git_ps1)")
       if [ -z "$ref" ]; then return 1; fi
       echo "$ref"
     }
@@ -290,7 +290,7 @@ __prompt_vcs() {
     svn_ref() {
       [ -d ".svn" ] || return 1
       ref=$(svn info | awk '/^URL/ { sub(".*/","",$0); r=$0 } /^Revision/ { sub("[^0-9]*","",$0); print $0 }')
-      echo "[$ref]"
+      echo " [$ref]"
     }
 
     git_ref || svn_ref
