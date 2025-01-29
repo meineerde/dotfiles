@@ -36,7 +36,8 @@ shopt -s hostcomplete >/dev/null 2>&1
 shopt -s interactive_comments >/dev/null 2>&1
 shopt -u mailwarn >/dev/null 2>&1
 shopt -s no_empty_cmd_completion >/dev/null 2>&1
-bind Space:magic-space
+# https://relentlesscoding.com/posts/bash-magic-space/
+shopt -s histverify
 
 # Bash History
 export HISTIGNORE="&:ls:ll:la:l.:pwd:exit:clear"
@@ -152,23 +153,21 @@ fi
 
 # Git
 alias g=git
-__git_complete g __git_main
+[[ -n "$BASH_COMPLETION" ]] && __git_complete g __git_main
 alias got='git'
-__git_complete got __git_main
+[[ -n "$BASH_COMPLETION" ]] && __git_complete got __git_main
 alias goit='git'
-__git_complete goit __git_main
+[[ -n "$BASH_COMPLETION" ]] && __git_complete goit __git_main
 alias gdiff='git diff'
-__git_complete gdiff _git_diff
-# alias d='git diff'
-# __git_complete d _git_diff
+[[ -n "$BASH_COMPLETION" ]] && __git_complete gdiff _git_diff
 alias st='git status'
-__git_complete gdiff _git_status
+[[ -n "$BASH_COMPLETION" ]] && __git_complete gdiff _git_status
 alias log='git lg'
-__git_complete log _git_log
+[[ -n "$BASH_COMPLETION" ]] && __git_complete log _git_log
 alias cm='git commit -m'
-__git_complete cm _git_commit
+[[ -n "$BASH_COMPLETION" ]] && __git_complete cm _git_commit
 alias ga='git add -p'
-__git_complete ga _git_add
+[[ -n "$BASH_COMPLETION" ]] && __git_complete ga _git_add
 
 ghead() { git rev-parse --verify "${1:-HEAD}"; }
 
@@ -187,7 +186,7 @@ alias screen='screen -U'
 alias less='less -R'
 
 alias ssh-insecure='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
-complete -o default -o nospace -F _ssh ssh-insecure
+[[ -n "$BASH_COMPLETION" ]] && complete -o default -o nospace -F _ssh ssh-insecure
 
 alias ..="cd .."
 alias ...="cd ../.."
@@ -263,9 +262,9 @@ _with_project() {
 }
 
 if shopt -q cdable_vars; then
-  complete -v -F _with_project -o nospace c e with_project
+  [[ -n "$BASH_COMPLETION" ]] && complete -v -F _with_project -o nospace c e with_project
 else
-  complete -F _with_project -o nospace c e with_project
+  [[ -n "$BASH_COMPLETION" ]] && complete -F _with_project -o nospace c e with_project
 fi
 
 ###############################################################################
