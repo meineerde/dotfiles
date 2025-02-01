@@ -28,7 +28,11 @@ namespace :install do
   end
 
   files :irb, ".irbrc", ".config/irb/*.rb"
-  files :dot, *%w[.bash_profile .bashrc .gemrc .gitignore_global .gitconfig .ackrc .rvmrc.dotfile]
+
+  dot_files = %w[bin]
+  dot_files += %w[.bash_profile .bashrc .gemrc .gitignore_global .ackrc .rvmrc.dotfile]
+  dot_files += %w[.gitconfig .gitconfig_holgerjust.de .gitconfig_plan.io]
+  files :dot, *dot_files
 
   files :vim, *%w[.vim .vimrc]
 end

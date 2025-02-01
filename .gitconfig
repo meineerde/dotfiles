@@ -12,33 +12,34 @@
 	su = submodule update --recursive --init
 	# https://stackoverflow.com/a/7149602/421705
 	addnw = !sh -c 'git diff -U0 -w --no-color "$@" | git apply --cached --ignore-whitespace --unidiff-zero' -
-[user]
-	name = Holger Just
-	email = hello@holgerjust.de
+[branch]
+	autosetupmerge = true
+	autosetuprebase = always
+[core]
+	autocrlf = false
+	excludesfile = ~/.gitignore_global
 [color]
 	branch = auto
 	diff = auto
 	grep = auto
 	interactive = auto
 	ui = auto
-[push]
-	default = tracking
-	recurseSubmodules = check
-[core]
-	autocrlf = false
-	excludesfile = ~/.gitignore_global
 [github]
 	user = meineerde
-[credential]
-	helper=osxkeychain
-[branch]
-	autosetupmerge = true
-	autosetuprebase = always
+[fetch]
+	fsckobjects = true
 [http]
 	postBuffer = 524288000
-[fetch]
+[push]
+  autoSetupRemote = true
+	default = upstream
+	recurseSubmodules = check
+[receive]
 	fsckobjects = true
 [transfer]
 	fsckobjects = true
-[receive]
-	fsckobjects = true
+
+[include]
+  path = ~/.gitconfig_holgerjust.de
+[includeIf "gitdir:~/workspace/planio/"]
+  path = ~/.gitconfig_plan.io
