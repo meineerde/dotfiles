@@ -30,6 +30,8 @@
 	fsckobjects = true
 [http]
 	postBuffer = 524288000
+[init]
+	defaultBranch = main
 [push]
   autoSetupRemote = true
 	default = upstream
