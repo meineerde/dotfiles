@@ -27,7 +27,7 @@ namespace :install do
     task :all => name
   end
 
-  files :irb, ".irbrc", ".config/irb/*.rb"
+  files :ruby, ".irbrc", ".config/irb/*.rb", ".config/solargraph/*.yml"
 
   dot_files = %w[bin]
   dot_files += %w[.bash_profile .bashrc .gemrc .gitignore_global .ackrc .rvmrc.dotfile]

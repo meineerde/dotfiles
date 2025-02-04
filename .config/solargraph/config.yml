@@ -1,0 +1,18 @@
+---
+include:
+  - "**/*.rb"
+  - "**/*.ru"
+  - "**/*.gemspec"
+  - "**/*.builder"
+  - "Gemfile"
+  - "Rakefile"
+exclude:
+  - spec/**/*
+  - vendor/**/*
+  - ".bundle/**/*"
+require: []
+domains: []
+reporters: []
+formatter: []
+require_paths: []
+max_files: 5000
