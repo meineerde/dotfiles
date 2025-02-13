@@ -182,6 +182,7 @@ alias ls='ls --color=auto'
 
 # Some more aliases.
 alias ll='ls --color=auto -Alh'
+alias lla='ls --color=auto -alh'
 alias screen='screen -U'
 alias less='less -R'
 
