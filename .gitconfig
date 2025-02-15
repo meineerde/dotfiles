@@ -45,6 +45,6 @@
 	fsckobjects = true
 
 [include]
-  path = ~/.gitconfig_holgerjust.de
+	path = ~/.gitconfig_holgerjust.de
 [includeIf "gitdir:~/workspace/planio/"]
-  path = ~/.gitconfig_plan.io
+	path = ~/.gitconfig_plan.io
