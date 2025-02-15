@@ -261,6 +261,11 @@ ce() {
   ${BACKGROUND_EDITOR} .
 }
 
+mc() {
+  [[ "$#" -lt 1 ]] && return 1
+  mkdir -p "$@" && cd "$1"
+}
+
 # bash completion with with_project and functions using it
 _with_project() {
   local CDPATH; CDPATH="$(project_dirs):{$CDPATH}"
