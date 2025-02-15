@@ -256,6 +256,11 @@ c() { with_project "$1" cd; }
 # open project in editor
 e() { with_project "${1:-.}" "${BACKGROUND_EDITOR} --"; }
 
+ce() {
+  c "$1"
+  ${BACKGROUND_EDITOR} .
+}
+
 # bash completion with with_project and functions using it
 _with_project() {
   local CDPATH; CDPATH="$(project_dirs):{$CDPATH}"
