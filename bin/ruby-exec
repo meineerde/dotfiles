@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+usage() {
+  echo "Usage $0 RUBY_VERSION [ARGS...]"
+  exit $1
+}
+
+[ $# -lt 1 ] && usage 1
+[ "${1:-}" = "--help" ] && usage 0
+
+ruby="$1"
+shift
+
+if command -v chruby-exec >/dev/null 2>&1; then
+  exec chruby-exec "$ruby" -- "$@"
+elif command -v rvm-exec >/dev/null 2>&1; then
+  exec rvm-exec "$ruby" "$@"
+elif command -v rbenv >/dev/null 2>&1; then
+  export RBENV_VERSION="$ruby"
+  exec rbenv exec "$@"
+else
+  echo "No Ruby version manager found, tried chruby, rvm, rbenv" >&2
+  exit 1
+fi
+
