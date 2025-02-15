@@ -242,10 +242,10 @@ with_project() {
   local target="$1"
   [[ -e "$1" ]] || target="$(d "$1")"
   if [[ -e $target ]]; then
-    echo -e "\033[0;34m${2} ${target}\033[00m"
+    echo -e "\033[0;34m${2} ${target}\033[00m" >&2
     $2 "$target"
   else
-    echo "unknown project"
+    echo -e "\033[0;31munknown project\033[00m" >&2
     return 1
   fi
 }
