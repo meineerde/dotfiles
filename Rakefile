@@ -30,8 +30,12 @@ namespace :install do
   files :ruby, ".irbrc", ".config/irb/*.rb", ".config/solargraph/*.yml"
 
   dot_files = %w[bin]
-  dot_files += %w[.bash_profile .bashrc .gemrc .gitignore_global .ackrc .rvmrc.dotfile]
-  dot_files += %w[.gitconfig .gitconfig_holgerjust.de .gitconfig_plan.io]
+  dot_files += %w[.bash_profile .bashrc .gemrc .ackrc .rvmrc.dotfile]
+  dot_files += %w[
+    .gitconfig .gitconfig_holgerjust.de .gitconfig_plan.io
+    .gitignore_global
+    .gitattributes_global
+  ]
   files :dot, *dot_files
 
   files :vim, *%w[.vim .vimrc]

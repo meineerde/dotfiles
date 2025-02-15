@@ -1,0 +1,13 @@
+*.css diff=css
+
+*.html diff=html
+*.xhtml diff=html
+
+*.md diff=markdown
+
+*.py diff=python
+
+*.rb diff=ruby
+*.rake diff=ruby
+*.gemspec diff=ruby
+*_spec.rb diff=rspec
